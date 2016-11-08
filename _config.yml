@@ -14,13 +14,13 @@ url: "http://sanlo.github.io" # the base hostname & protocol for your site
 permalink: /:year/:month/:day/:title/
 
 # other links
-twitter_username: sanlo126
+twitter_username:
 facebook_username: sanlozhang
 github_username:  sanlo
 email: 940072028@qq.com
-weibo_username: 3115521wh
+weibo_username: nestor_Lu
 zhihu_username: sanlo
-linkedIn_username: sanlo
+linkedIn_username: sanlozhang
 dribbble_username:
 
 description_footer: 上下前后左右而求索
