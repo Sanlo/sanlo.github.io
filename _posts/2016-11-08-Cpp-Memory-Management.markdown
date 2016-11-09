@@ -121,7 +121,7 @@ void TestClass::operator delete(void *p){
 
 &emsp;&emsp;C++将对象数组的内存分配作为一个单独的操作，而不同于单个对象的内存分配。为了改变这种方式，你同样需要重载`new[]` 和 `delete[]`操作符。
 　　
-``` cpp
+```cpp
 class TestClass {
     public:
     void * operator new[ ](size_t size);
