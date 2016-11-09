@@ -32,8 +32,9 @@ excerpt: 内存管理是C++最令人切齿痛恨的问题，也是C++最有争�
 
 ### 明确区分堆与栈
 &emsp;&emsp;堆与栈的区分问题，似乎是一个永恒的话题，由此可见，初学者对此往往是混淆不清的，所以我决定拿他第一个开刀。首先，我们举一个例子：
+
 ``` cpp
-1	void f() { int* p=new int[5]; }
+void f() { int* p=new int[5]; }
 ```
 &emsp;&emsp;这条短短的一句话就包含了堆与栈，看到`new`，我们首先就应该想到，我们分配了一块堆内存，那么指针`p`呢？他分配的是一块栈内存，所以这句话的意思就是：在栈内存中存放了一个指向一块堆内存的指针`p`。在程序会先确定在堆中分配内存的大小，然后调用`operator new`分配内存，然后返回这块内存的首地址，放入栈中，他在VC6下的汇编代码如下：
 
@@ -83,8 +84,9 @@ excerpt: 内存管理是C++最令人切齿痛恨的问题，也是C++最有争�
 
 ### 重载全局的new和delete操作符
 
-&emsp;&emsp;可以很容易地重载`new` 和 `delete` 操作符，如下所示:
-``` cpp
+&emsp;&emsp;可以很容易地重载`new` 和 `delete` 操作符，如下所示:  
+
+```cpp
 void * operator new(size_t size){
     void *p = malloc(size);
     return (p);
@@ -93,7 +95,8 @@ void operator delete(void *p){
     free(p);
 }
 ```
-&emsp;&emsp;这段代码可以代替默认的操作符来满足内存分配的请求。出于解释C++的目的，我们也可以直接调用`malloc()` 和`free()`。也可以对单个类的`new` 和 `delete`操作符重载。这是你能灵活的控制对象的内存分配。
+&emsp;&emsp;这段代码可以代替默认的操作符来满足内存分配的请求。出于解释C++的目的，我们也可以直接调用`malloc()` 和`free()`。也可以对单个类的`new` 和 `delete`操作符重载。这是你能灵活的控制对象的内存分配。  
+
 ```cpp
 class TestClass {
     public:
@@ -118,7 +121,7 @@ void TestClass::operator delete(void *p){
 
 &emsp;&emsp;C++将对象数组的内存分配作为一个单独的操作，而不同于单个对象的内存分配。为了改变这种方式，你同样需要重载`new[]` 和 `delete[]`操作符。
 　　
-``` cpp
+``` 
 class TestClass {
     public:
     void * operator new[ ](size_t size);
@@ -171,7 +174,7 @@ int main(void){
 
 ### 修改内容　　
 &emsp;&emsp;下面示例中，字符数组a的容量是6个字符，其内容为 hello。a的内容可以改变，如`a[0]= 'X'`。指针p指向常量字符串“world”（位于静态存储区，内容为world），常量字符串的内容是不可以被修改的。从语法上看，编译器并不觉得语句`p[0]= 'X'`有什么不妥，但是该语句企图修改常量字符串的内容而导致运行错误。
-```cpp
+```
 char a[] = "hello";
 a[0] = 'X';
 cout << a << endl;
@@ -184,7 +187,7 @@ cout << p << endl;
 
 &emsp;&emsp;不能对数组名进行直接复制与比较。若想把数组a的内容复制给数组b，不能用语句 `b = a` ，否则将产生编译错误。应该用标准库函数`strcpy`进行复制。同理，比较b和a的内容是否相同，不能用`if(b==a)` 来判断，应该用标准库函数`strcmp`进行比较。  
 　　语句 `p = a` 并不能把a的内容复制指针`p`，而是把a的地址赋给了p。要想复制a的内容，可以先用库函数`malloc`为p申请一块容量为`strlen(a)+1`个字符的内存，再用`strcpy`进行字符串复制。同理，语句`if(p==a)` 比较的不是内容而是地址，应该用库函数`strcmp`来比较。  
-```cpp
+```
 // 数组…
 char a[] = "hello";
 char b[10];
@@ -200,14 +203,14 @@ if(strcmp(p, a) == 0) // 不要用 if (p == a)
 ```
 ### 计算内存容量  
 &emsp;&emsp;用运算符`sizeof`可以计算出数组的容量（字节数）。如下示例中，`sizeof(a)`的值是12（注意别忘了’’）。指针`p`指向a，但是`sizeof(p)`的值却是4。这是因为`sizeof(p)`得到的是一个指针变量的字节数，相当于`sizeof(char*)`，而不是`p`所指的内存容量。C++/C语言没有办法知道指针所指的内存容量，除非在申请内存时记住它。
-```cpp
+```
 char a[] = "hello world";
 char *p = a;
 cout<< sizeof(a) << endl; // 12字节
 cout<< sizeof(p) << endl; // 4字节
 ```  
 &emsp;&emsp;注意当数组作为函数的参数进行传递时，该数组自动退化为同类型的指针。如下示例中，不论数组a的容量是多少，`sizeof(a)`始终等于`sizeof(char *)`。  
-```cpp
+```
 void Func(char a[100]){
     cout<< sizeof(a) << endl; // 4字节而不是100字节
 }
@@ -228,7 +231,7 @@ void Test(void){
 ```
 &emsp;&emsp;毛病出在函数`GetMemory`中。编译器总是要为函数的每个参数制作临时副本，指针参数p的副本是 `_p`，编译器使 `_p=p`。如果函数体内的程序修改了`_p`的内容，就导致参数`p`的内容作相应的修改。这就是指针可以用作输出参数的原因。在本例中，`_p`申请了新的内存，只是把 `_p`所指的内存地址改变了，但是`p`丝毫未变。所以函数`GetMemory`并不能输出任何东西。事实上，每执行一次`GetMemory`就会泄露一块内存，因为没有用`free`释放内存。  
 　　如果非得要用指针参数去申请内存，那么应该改用“指向指针的指针”，见示例：
-```cpp
+```
 void GetMemory2(char **p, int num){
     *p = (char *)malloc(sizeof(char) * num);
 }
@@ -242,7 +245,7 @@ void Test2(void){
 }
 ```
 &emsp;&emsp;由于“指向指针的指针”这个概念不容易理解，我们可以用函数返回值来传递动态内存。这种方法更加简单，见示例：
-```cpp
+```
 char *GetMemory3(int num){
     char *p = (char *)malloc(sizeof(char) * num);
     return p;
@@ -257,7 +260,7 @@ void Test3(void){
 }
 ```
 &emsp;&emsp;用函数返回值来传递动态内存这种方法虽然好用，但是常常有人把`return`语句用错了。这里强调不要用`return`语句返回指向“栈内存”的指针，因为该内存在函数结束时自动消亡，见示例：
-```cpp
+```
 char *GetString(void){
     char p[] = "hello world";
     return p; // 编译器将提出警告
@@ -270,7 +273,7 @@ void Test4(void){
 ```
 &emsp;&emsp;用调试器逐步跟踪Test4，发现执行`str = GetString`语句后`str`不再是`NULL`指针，但是`str`的内容不是`"hello world"`而是垃圾。
 如果把上述示例改写成如下示例，会怎么样？
-```cpp
+```
 char *GetString2(void){
     char *p = "hello world";
     return p;
@@ -287,13 +290,13 @@ void Test5(void){
 
 &emsp;&emsp;“野指针”不是`NULL`指针，是指向“垃圾”内存的指针。人们一般不会错用`NULL`指针，因为用`if`语句很容易判断。但是“野指针”是很危险的，`if`语句对它不起作用。 “野指针”的成因主要有三种：  
 　　(1). 指针变量没有被初始化。任何指针变量刚被创建时不会自动成为NULL指针，它的缺省值是随机的，它会乱指一气。所以，指针变量在创建的同时应当被初始化，要么将指针设置为NULL，要么让它指向合法的内存。例如：
-```cpp
+```
 char *p = NULL;
 char *str = (char *) malloc(100);
 ```  
 　　&emsp;&emsp;(2). 指针`p`被`free`或者`delete`之后，没有置为`NULL`，让人误以为`p`是个合法的指针。  
 　　(3). 指针操作超越了变量的作用域范围。这种情况让人防不胜防，示例程序如下：
-```cpp
+```
 class A{
     public:
     void Func(void){ cout << “Func of class A” << endl; }
@@ -314,8 +317,12 @@ void Test(void){
 &emsp;&emsp;`malloc`与`free`是C++/C语言的标准库函数，`new/delete`是C++的运算符。它们都可用于申请动态内存和释放内存。  
 　　对于非内部数据类型的对象而言，光用`maloc/free`无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于`malloc/free`是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于`malloc/free`。  
 　　因此C++语言需要一个能完成动态内存分配和初始化工作的运算符`new`，以及一个能完成清理与释放内存工作的运算符`delete`。注意`new/delete不是库函数。我们先看一看malloc/free和new/delete`如何实现对象的动态内存管理，见示例：
+<<<<<<< HEAD
 
 ```cpp
+=======
+```
+>>>>>>> origin/master
 class Obj{
     public :
 　　Obj(void){ cout << “Initialization” << endl; }
@@ -346,8 +353,12 @@ void UseNewDelete(void){
 
 &emsp;&emsp;如果在申请动态内存时找不到足够大的内存块，`malloc`和`new`将返回`NULL`指针，宣告内存申请失败。通常有三种方式处理“内存耗尽”问题。  
 　　(1). 判断指针是否为`NULL`，如果是则马上用`return`语句终止本函数。例如：
+<<<<<<< HEAD
 
 ```cpp
+=======
+```
+>>>>>>> origin/master
 void Func(void){
     A *a = new A;
     if(a == NULL)
@@ -356,8 +367,12 @@ void Func(void){
 }
 ```
 &emsp;&emsp;(2). 判断指针是否为`NULL`，如果是则马上用`exit(1)`终止整个程序的运行。例如：
+<<<<<<< HEAD
 
 ```cpp
+=======
+```
+>>>>>>> origin/master
 void Func(void){
     A *a = new A;
     if(a == NULL){
@@ -373,8 +388,12 @@ void Func(void){
 　　不行。如果发生“内存耗尽”这样的事情，一般说来应用程序已经无药可救。如果不用`exit(1)` 把坏程序杀死，它可能会害死操作系统。道理如同：如果不把歹徒击毙，歹徒在老死之前会犯下更多的罪。  
 　　有一个很重要的现象要告诉大家。对于32位以上的应用程序而言，无论怎样使用`malloc`与`new`，几乎不可能导致“内存耗尽”。对于32位以上的应用程序，“内存耗尽”错误处理程序毫无用处。这下可把Unix和Windows程序员们乐坏了：反正错误处理程序不起作用，我就不写了，省了很多麻烦。  
 　　必须强调：不加错误处理将导致程序的质量很差，千万不可因小失大。
+<<<<<<< HEAD
 
 ```cpp
+=======
+```
+>>>>>>> origin/master
 void main(void){
     float *p = NULL;
     while(TRUE){
@@ -389,7 +408,7 @@ void main(void){
 ## malloc/free的使用要点
 
 &emsp;&emsp;函数`malloc`的原型如下：
-```cpp	
+```
 void * malloc(size_t size);
 ```
 &emsp;&emsp;用`malloc`申请一块长度为`length`的整数类型的内存，程序如下：
@@ -399,8 +418,12 @@ int *p = (int *) malloc(sizeof(int) * length);
 &emsp;&emsp;我们应当把注意力集中在两个要素上：“类型转换”和“sizeof”。
 &emsp;&emsp;`* malloc`返回值的类型是`void*`，所以在调用`malloc`时要显式地进行类型转换，将`void *`转换成所需要的指针类型。
 &emsp;&emsp;`* malloc`函数本身并不识别要申请的内存是什么类型，它只关心内存的总字节数。我们通常记不住`int`, `float`等数据类型的变量的确切字节数。例如`int`变量在16位系统下是2个字节，在32位下是4个字节；而`float`变量在16位系统下是4个字节，在32位下也是4个字节。最好用以下程序作一次测试：
+<<<<<<< HEAD
 
 ```cpp
+=======
+```
+>>>>>>> origin/master
 cout << sizeof(char) << endl;
 cout << sizeof(int) << endl;
 cout << sizeof(unsigned int) << endl;
@@ -412,7 +435,7 @@ cout << sizeof(void *) << endl;
 ```
 &emsp;&emsp;在`malloc`的“()”中使用`sizeof`运算符是良好的风格，但要当心有时我们会昏了头，写出 `p = malloc(sizeof(p))`这样的程序来。
 &emsp;&emsp;函数`free`的原型如下：
-```cpp
+```
 void free( void * memblock );
 ```
 &emsp;&emsp;为什么`free`函数不象`malloc`函数那样复杂呢？这是因为指针`p`的类型以及它所指的内存的容量事先都是知道的，语句`free(p)`能正确地释放内存。如果`p`是`NULL`指针，那么`free`对`p`无论操作多少次都不会出问题。如果`p`不是`NULL`指针，那么`free`对`p`连续操作两次就会导致程序运行错误。
@@ -420,12 +443,12 @@ void free( void * memblock );
 ## new/delete的使用要点
 
 &emsp;&emsp;运算符`new`使用起来要比函数`malloc`简单得多，例如：
-```cpp
+```
 int *p1 = (int *)malloc(sizeof(int) * length);
 int *p2 = new int[length];
 ```
 &emsp;&emsp;这是因为`new`内置了`sizeof`、类型转换和类型安全检查功能。对于非内部数据类型的对象而言，`new`在创建动态对象的同时完成了初始化工作。如果对象有多个构造函数，那么`new`的语句也可以有多种形式。例如：
-```cpp
+```
 class Obj{
     public :
     Obj(void); // 无参数的构造函数
@@ -441,16 +464,16 @@ void Test(void){
 }
 ```
 &emsp;&emsp;如果用`new`创建对象数组，那么只能使用对象的无参数构造函数。例如：
-```cpp
+```
 Obj *objects = new Obj[100]; // 创建100个动态对象
 ```
 &emsp;&emsp;不能写成：
-```cpp
+```
 	
 Obj *objects = new Obj[100](1);// 创建100个动态对象的同时赋初值1
 ```
 &emsp;&emsp;在用`delete`释放对象数组时，留意不要丢了符号‘[]’。例如：
-```cpp
+```
 delete []objects; // 正确的用法
 delete objects; // 错误的用法
 ```
