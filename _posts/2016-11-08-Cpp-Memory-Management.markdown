@@ -96,6 +96,7 @@ void operator delete(void *p){
 }
 ```
 &emsp;&emsp;这段代码可以代替默认的操作符来满足内存分配的请求。出于解释C++的目的，我们也可以直接调用`malloc()` 和`free()`。也可以对单个类的`new` 和 `delete`操作符重载。这是你能灵活的控制对象的内存分配。  
+
 ```cpp
 class TestClass {
     public:
