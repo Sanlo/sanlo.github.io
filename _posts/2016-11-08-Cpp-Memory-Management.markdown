@@ -86,7 +86,7 @@ void f() { int* p=new int[5]; }
 
 &emsp;&emsp;可以很容易地重载`new` 和 `delete` 操作符，如下所示:  
 
-```
+```cpp
 void * operator new(size_t size){
     void *p = malloc(size);
     return (p);
