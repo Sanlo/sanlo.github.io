@@ -314,6 +314,7 @@ void Test(void){
 &emsp;&emsp;`malloc`与`free`是C++/C语言的标准库函数，`new/delete`是C++的运算符。它们都可用于申请动态内存和释放内存。  
 　　对于非内部数据类型的对象而言，光用`maloc/free`无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于`malloc/free`是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于`malloc/free`。  
 　　因此C++语言需要一个能完成动态内存分配和初始化工作的运算符`new`，以及一个能完成清理与释放内存工作的运算符`delete`。注意`new/delete不是库函数。我们先看一看malloc/free和new/delete`如何实现对象的动态内存管理，见示例：
+
 ```cpp
 class Obj{
     public :
@@ -345,6 +346,7 @@ void UseNewDelete(void){
 
 &emsp;&emsp;如果在申请动态内存时找不到足够大的内存块，`malloc`和`new`将返回`NULL`指针，宣告内存申请失败。通常有三种方式处理“内存耗尽”问题。  
 　　(1). 判断指针是否为`NULL`，如果是则马上用`return`语句终止本函数。例如：
+
 ```cpp
 void Func(void){
     A *a = new A;
@@ -354,6 +356,7 @@ void Func(void){
 }
 ```
 &emsp;&emsp;(2). 判断指针是否为`NULL`，如果是则马上用`exit(1)`终止整个程序的运行。例如：
+
 ```cpp
 void Func(void){
     A *a = new A;
@@ -370,6 +373,7 @@ void Func(void){
 　　不行。如果发生“内存耗尽”这样的事情，一般说来应用程序已经无药可救。如果不用`exit(1)` 把坏程序杀死，它可能会害死操作系统。道理如同：如果不把歹徒击毙，歹徒在老死之前会犯下更多的罪。  
 　　有一个很重要的现象要告诉大家。对于32位以上的应用程序而言，无论怎样使用`malloc`与`new`，几乎不可能导致“内存耗尽”。对于32位以上的应用程序，“内存耗尽”错误处理程序毫无用处。这下可把Unix和Windows程序员们乐坏了：反正错误处理程序不起作用，我就不写了，省了很多麻烦。  
 　　必须强调：不加错误处理将导致程序的质量很差，千万不可因小失大。
+
 ```cpp
 void main(void){
     float *p = NULL;
@@ -395,6 +399,7 @@ int *p = (int *) malloc(sizeof(int) * length);
 &emsp;&emsp;我们应当把注意力集中在两个要素上：“类型转换”和“sizeof”。
 &emsp;&emsp;`* malloc`返回值的类型是`void*`，所以在调用`malloc`时要显式地进行类型转换，将`void *`转换成所需要的指针类型。
 &emsp;&emsp;`* malloc`函数本身并不识别要申请的内存是什么类型，它只关心内存的总字节数。我们通常记不住`int`, `float`等数据类型的变量的确切字节数。例如`int`变量在16位系统下是2个字节，在32位下是4个字节；而`float`变量在16位系统下是4个字节，在32位下也是4个字节。最好用以下程序作一次测试：
+
 ```cpp
 cout << sizeof(char) << endl;
 cout << sizeof(int) << endl;
