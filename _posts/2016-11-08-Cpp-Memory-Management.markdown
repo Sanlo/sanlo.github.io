@@ -120,7 +120,7 @@ void TestClass::operator delete(void *p){
 &emsp;&emsp;必须小心对象数组的分配。你可能希望调用到被你重载过的`new` 和 `delete` 操作符，但并不如此。内存的请求被定向到全局的`new[]`和`delete[]` 操作符，而这些内存来自于系统堆。
 
 &emsp;&emsp;C++将对象数组的内存分配作为一个单独的操作，而不同于单个对象的内存分配。为了改变这种方式，你同样需要重载`new[]` 和 `delete[]`操作符。
-　　
+
 ```cpp
 class TestClass {
     public:
