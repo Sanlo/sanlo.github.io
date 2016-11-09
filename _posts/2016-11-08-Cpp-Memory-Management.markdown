@@ -310,7 +310,7 @@ char *str = (char *) malloc(100);
 ```cpp
 class A{
     public:
-    void Func(void){ cout << “Func of class A” << endl; }
+    void Func(void){ cout << "Func of class A" << endl; }
 };
 void Test(void){
     A *p;
@@ -318,7 +318,7 @@ void Test(void){
     A a;
     p = &a; // 注意 a 的生命期
     }
-    p->Func(); // p是“野指针”
+    p->Func(); // p是"野指针"
 }
 ```
 &emsp;&emsp;函数Test在执行语句`p->Func()`时，对象a已经消失，而`p`是指向a的，所以`p`就成了“野指针”。但奇怪的是我运行这个程序时居然没有出错，这可能与编译器有关。
@@ -327,27 +327,27 @@ void Test(void){
 
 &emsp;&emsp;`malloc`与`free`是C++/C语言的标准库函数，`new/delete`是C++的运算符。它们都可用于申请动态内存和释放内存。  
 　　对于非内部数据类型的对象而言，光用`maloc/free`无法满足动态对象的要求。对象在创建的同时要自动执行构造函数，对象在消亡之前要自动执行析构函数。由于`malloc/free`是库函数而不是运算符，不在编译器控制权限之内，不能够把执行构造函数和析构函数的任务强加于`malloc/free`。  
-　　因此C++语言需要一个能完成动态内存分配和初始化工作的运算符`new`，以及一个能完成清理与释放内存工作的运算符`delete`。注意`new/delete不是库函数。我们先看一看malloc/free和new/delete`如何实现对象的动态内存管理，见示例：
+　　因此C++语言需要一个能完成动态内存分配和初始化工作的运算符`new`，以及一个能完成清理与释放内存工作的运算符`delete`。注意`new/delete`不是库函数。我们先看一看`malloc/free`和`new/delete`如何实现对象的动态内存管理，见示例：
 
 ```cpp
 class Obj{
     public :
-　　Obj(void){ cout << “Initialization” << endl; }
-　　~Obj(void){ cout << “Destroy” << endl; }
-　　void Initialize(void){ cout << “Initialization” << endl; }
-　　void Destroy(void){ cout << “Destroy” << endl; }
+　　Obj(void){ cout << "Initialization" << endl; }
+　　~Obj(void){ cout << "Destroy" << endl; }
+　　void Initialize(void){ cout << "Initialization" << endl; }
+　　void Destroy(void){ cout << "Destroy" << endl; }
 };
 void UseMallocFree(void){
     Obj *a = (obj *)malloc(sizeof(obj)); // 申请动态内存
     a->Initialize(); // 初始化
-    //…
+    //...
     
     a->Destroy(); // 清除工作
     free(a); // 释放内存
 }
 void UseNewDelete(void){
     Obj *a = new Obj; // 申请动态内存并且初始化
-    //…
+    //...
     delete a; // 清除并且释放内存
 }
 ```
@@ -366,7 +366,7 @@ void Func(void){
     A *a = new A;
     if(a == NULL)
         return;
-    …
+    ...
 }
 ```
 &emsp;&emsp;(2). 判断指针是否为`NULL`，如果是则马上用`exit(1)`终止整个程序的运行。例如：
@@ -375,10 +375,10 @@ void Func(void){
 void Func(void){
     A *a = new A;
     if(a == NULL){
-        cout << “Memory Exhausted” << endl;
+        cout << "Memory Exhausted" << endl;
         exit(1);
     }
-    …
+    ...
 }
 ```
 &emsp;&emsp;(3). 为`new`和`malloc`设置异常处理函数。例如Visual C++可以用`_set_new_hander`函数为`new`设置用户自己定义的异常处理函数，也可以让`malloc`享用与`new`相同的异常处理函数。详细内容请参考C++使用手册。  
@@ -393,7 +393,7 @@ void main(void){
     float *p = NULL;
     while(TRUE){
         p = new float[1000000];
-        cout << “eat memory” << endl;
+        cout << "eat memory" << endl;
         if(p==NULL)
             exit(1);
     }
@@ -412,9 +412,9 @@ void * malloc(size_t size);
 ```cpp
 int *p = (int *) malloc(sizeof(int) * length);
 ```
-&emsp;&emsp;我们应当把注意力集中在两个要素上：“类型转换”和“sizeof”。
-&emsp;&emsp;`* malloc`返回值的类型是`void*`，所以在调用`malloc`时要显式地进行类型转换，将`void *`转换成所需要的指针类型。
-&emsp;&emsp;`* malloc`函数本身并不识别要申请的内存是什么类型，它只关心内存的总字节数。我们通常记不住`int`, `float`等数据类型的变量的确切字节数。例如`int`变量在16位系统下是2个字节，在32位下是4个字节；而`float`变量在16位系统下是4个字节，在32位下也是4个字节。最好用以下程序作一次测试：
+&emsp;&emsp;我们应当把注意力集中在两个要素上：“类型转换”和“sizeof”。  
+　　`* malloc`返回值的类型是`void*`，所以在调用`malloc`时要显式地进行类型转换，将`void *`转换成所需要的指针类型。  
+　　`* malloc`函数本身并不识别要申请的内存是什么类型，它只关心内存的总字节数。我们通常记不住`int`, `float`等数据类型的变量的确切字节数。例如`int`变量在16位系统下是2个字节，在32位下是4个字节；而`float`变量在16位系统下是4个字节，在32位下也是4个字节。最好用以下程序作一次测试：
 
 ```cpp
 cout << sizeof(char) << endl;
@@ -426,8 +426,8 @@ cout << sizeof(float) << endl;
 cout << sizeof(double) << endl;
 cout << sizeof(void *) << endl;
 ```
-&emsp;&emsp;在`malloc`的“()”中使用`sizeof`运算符是良好的风格，但要当心有时我们会昏了头，写出 `p = malloc(sizeof(p))`这样的程序来。
-&emsp;&emsp;函数`free`的原型如下：
+&emsp;&emsp;在`malloc`的“()”中使用`sizeof`运算符是良好的风格，但要当心有时我们会昏了头，写出 `p = malloc(sizeof(p))`这样的程序来。  
+　　函数`free`的原型如下：
 
 ```cpp
 void free( void * memblock );
