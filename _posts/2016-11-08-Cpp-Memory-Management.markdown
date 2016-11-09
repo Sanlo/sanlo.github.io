@@ -84,7 +84,7 @@ void f() { int* p=new int[5]; }
 
 ### 重载全局的new和delete操作符
 
-&emsp;&emsp;可以很容易地重载`new` 和 `delete` 操作符，如下所示:
+&emsp;&emsp;可以很容易地重载`new` 和 `delete` 操作符，如下所示:  
 ```
 void * operator new(size_t size){
     void *p = malloc(size);
