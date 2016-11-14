@@ -260,7 +260,9 @@ data = [[6.9, 3.1, 1.0], [5.0, 3.5, 0.0], [5.0, 2.3, 1.0], [4.6, 3.4, 0.0], [5.5
 
 ### 3.2 数据预处理，包括：
 　　1.增加常数项x0: 1.0；
+
 　　2.feature 与 label的分离；
+
 　　3.返回数组类型的feature 和 label。
 
 ```python
@@ -275,6 +277,7 @@ def preprocess(data):
         labels.append(x[2])
     return np.array(train_X), np.array(labels) 
 ```
+
 ### 3.3 定义`Logistic`函数：
 
 ```python
@@ -285,6 +288,7 @@ def logit(z):
     '''
     return 1.0 / (1.0 + np.exp(-z))
 ```
+
 ### 3.4 梯度上升法算法：
 
 ```python
@@ -334,6 +338,7 @@ p_1(\boldsymbol{x}_n;\boldsymbol{w})
 \end{pmatrix}
 \end{bmatrix}
 $$
+
 ### 3.5 牛顿法算法：
 ```python
 def newton(train_X, labels, max_iter = 10):
@@ -379,6 +384,7 @@ p_1(\boldsymbol{x}_1;\boldsymbol{w})(p_1(\boldsymbol{x}_1;\boldsymbol{w})-1) & &
 1.0 & x_{n1} & x_{n2}
 \end{bmatrix}
 $$
+
 ### 3.6 选择最优算法，根据求得的最优系数画出回归直线：
 
 ```python
@@ -411,6 +417,7 @@ plt.xlabel('x1')
 plt.ylabel('x2')
 plt.show() 
 ```
+
 ### 3.7 下面一个cell运行整段代码：
 
 ```python
