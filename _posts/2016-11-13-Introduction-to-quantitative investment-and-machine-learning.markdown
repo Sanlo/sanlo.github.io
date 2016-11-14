@@ -20,7 +20,7 @@ Q：机器学习在这里扮演了怎样一个角色？
 A：某种意义上，我们做的就是机器学习。你观察一大堆数据，模拟不同的预测方案，直到你越来越擅长于此。我们所做之事，不见得一定有自我反馈，但确实有效。  
 视频地址：[与横扫华尔街数学家的珍贵对话](http://v.qq.com/boke/page/s/0/w/s0186b0yrpw.html)
 
-<iframe frameborder="0" width="640" height="498" src="http://v.qq.com/iframe/player.html?vid=s0186b0yrpw&tiny=0&auto=0" allowfullscreen></iframe>
+<iframe frameborder="0" width="640" height="498" src="https://v.qq.com/iframe/player.html?vid=s0186b0yrpw&tiny=0&auto=0" allowfullscreen></iframe>
 
 &emsp;&emsp;然而现在有许多已实现的机器学习开源包可供我们调用，如sklearn，更高级的技术还有Hadoop、Spark等等。
 那么是不是我们只须知道如何将训练数据与测试数据输入到模型，然后调用分类或回归的结果就好了呢？  
