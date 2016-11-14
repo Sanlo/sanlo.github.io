@@ -504,6 +504,7 @@ plt.ylabel('x2')
 plt.show() 
 ```
 ![](../css/pics/p20161113-02.jpg)
+
 ## 4. sklearn中的`Logistic Regression`算法  
 &emsp;&emsp;`sklearn`是`Python`实现的开源机器学习算法包，优矿正好也支持它。下面简单介绍下`sklearn`中`Logistic Regression`的使用。
 
