@@ -12,32 +12,23 @@ excerpt: 虽然现在Raspberry Pi的安装随着系统的优化越来越简单�
 ### 0.0 序
 本文主要讲解`Raspberry Pi 3 Model B`的安装与配置，配置完成后，可以通过远程SSH和VNC进行连接。
 
-&emsp;&emsp;**最小采购清单；**
-
-&emsp;&emsp;**安装需要的软件；**
-
-&emsp;&emsp;**安装系统至SD卡；**
-
-&emsp;&emsp;**安装之后的系统配置；**
+>**最小采购清单；**  
+>**安装需要的软件；**  
+>**安装系统至SD卡；**  
+>**安装之后的系统配置；**
 
 ### 1. 最小采购清单
 
-&emsp;&emsp; Raspberry Pi作为最小的个人电脑，由于只有一块主板，所以有些配件是临时还是必需的。
-> Raspberry Pi 3 Model B主板
+Raspberry Pi作为最小的个人电脑，由于只有一块主板，所以有些配件是临时还是必需的。
+> Raspberry Pi 3 Model B主板  
+> SD卡（最好8Gb以上），我选用的是SAMSUNG EVO 32 GB Class 10  
+> 散热片，风扇  
+> 亚克力外壳  
+> 带有USB接口的鼠标，键盘  
+> 显示器，最好带有HDMI接口  
+> 网线，HDMI线(如果显示器没有HDMI接口，还需要有VGA转HDMI线)
 
-> SD卡（最好8Gb以上），我选用的是SAMSUNG EVO 32 GB Class 10
-
-> 散热片，风扇
-
-> 亚克力外壳
-
-> 带有USB接口的鼠标，键盘
-
-> 显示器，最好带有HDMI接口
-
-> 网线，HDMI线，如果显示器没有HDMI接口，还需要有VGA转HDMI线
-
-&emsp;&emsp; 除了主板，SD卡，散热片，风扇与外壳是正常工作时要使用的之外，其他均是在第一次安装配置Raspberry Pi要用的。SD卡之所以选用SAMSUNG EVO 32 GB Class 10，是由于Windows 10 IoT对于用于安装的SD卡有严格限制，而这一款正好是其推荐的，如果以后想玩Win10 IoT就省得再买了。由于Raspberry Pi 3已经配置的板载的蓝牙和Wifi，后面可以通过Wifi远程进行SSH和VNC连接。如果需要从外网连接家中的Raspberry Pi，可以使用[RealVNC](https://www.realvnc.com/en/download/viewer/)和[Dataplicity](https://www.dataplicity.com)在任何环境中连接。
+除了主板，SD卡，散热片，风扇与外壳是正常工作时要使用的之外，其他均是在第一次安装配置Raspberry Pi要用的。SD卡之所以选用SAMSUNG EVO 32 GB Class 10，是由于Windows 10 IoT对于用于安装的SD卡有严格限制，而这一款正好是其推荐的，如果以后想玩Win10 IoT就省得再买了。由于Raspberry Pi 3已经配置的板载的蓝牙和Wifi，后面可以通过Wifi远程进行SSH和VNC连接。如果需要从外网连接家中的Raspberry Pi，可以使用[RealVNC](https://www.realvnc.com/en/download/viewer/)和[Dataplicity](https://www.dataplicity.com)在任何环境中连接。
 
 ### 2. 安装需要的软件
 
