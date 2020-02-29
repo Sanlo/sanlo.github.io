@@ -3,7 +3,7 @@ layout: post
 title:  "Raspberry Pi 安装与配置"
 categories: IoT
 tags: Raspberry 安装 
-excerpt：虽然现在Raspberry Pi的安装随着系统的优化越来越简单，但是还是会遇到各种未知的问题。本文仅就我遇到的问题做个总结笔记。 
+excerpt: 虽然现在Raspberry Pi的安装随着系统的优化越来越简单，但是还是会遇到各种未知的问题。本文仅就我遇到的问题做个总结笔记。 
 ---
 
 * content
