@@ -12,8 +12,6 @@ tags: jekyll RubyGems
 
 
 
-
-
 ## 搭建过程
 
 在jekyll的官网上 [http://jekyllrb.com/](http://jekyllrb.com/) 其实已经说得比较明白了，我在这里还是简单的说一下吧。我用的是Windows系统。

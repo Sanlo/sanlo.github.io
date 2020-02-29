@@ -23,10 +23,3 @@ icon: heart
 
 
 ### Update Log
-
-
-## 友情链接
-
-## Comments
-
-{% include comments.html %}
