@@ -14,7 +14,7 @@ url: "http://sanlo.github.io" # the base hostname & protocol for your site
 permalink: /:year/:month/:day/:title/
 
 # other links
-github_username:  sanlo
+github_username: sanlo
 email: 940072028@qq.com
 linkedIn_username: sanlozhang
 
@@ -24,6 +24,12 @@ description_footer: 上下前后左右而求索
 # two ways to comment, only choose one, and use your own short name
 # 两种评论插件，选一个就好了，使用自己的 short_name
 disqus_shortname: sanlo
+
+# Build settings
+theme: minima
+plugins:
+    - jekyll-feed
+    - jekyll-paginate
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即
@@ -35,8 +41,8 @@ baidu_tongji_id: 1f7d43af55ce2bec75aa12a2f831af8e
 markdown: kramdown
 
 kramdown:
-  input: GFM
-  syntax_highlighter: rouge
+    input: GFM
+    syntax_highlighter: rouge
 
 # port
 # port: 1234
