@@ -11,41 +11,34 @@ layout: default
             {% for post in paginator.posts %}
               <li>
                 <h2>
-                  <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+                  <a class="post-link" href="{{ post.url }}">{{ post.title }}</a>
                 </h2>
                 <div class="label">
                     <div class="label-card">
-                        <i class="fa fa-calendar"></i>{{ post.date | date: "%F" }}
+                        <i class="fa fa-calendar"></i>{{ post.date | date: "%a, %b %d, %y" }}
                     </div>
                     <div class="label-card">
-                        {% if post.author %}<i class="fa fa-user"></i>{{ post.author }}
-                        {% endif %}
+                      {% if post.author %}
+                        <i class="fa fa-user"></i>{{ post.author }}
+                      {% endif %}
                     </div>
                     <div class="label-card">
-                        {% if page.meta %}<i class="fa fa-key"></i>{{ page.meta }}  {% endif %}
+                      {% include category.html %}
                     </div>
-
                     <div class="label-card">
-                    {% include category.html %}
-                    </div>
-
-                    <div class="label-card">
-                    {% include tag.html %}
+                      {% include tag.html %}
                     </div>
                 </div>
                 <div class="excerpt">
                     {{post.excerpt}}
                 </div>
                 <div class="read-all">
-                    <a  href="{{ post.url | prepend: site.baseurl }}"><i class="fa fa-newspaper-o"></i>Read All</a>
+                    <a  href="{{ post.url }}"><i class="fa fa-newspaper-o"></i>Read All</a>
                 </div>
                 <hr>
               </li>
             {% endfor %}
         </ul>
-
-
-
         <!-- Pagination links -->
         <div class="pagination">
           {% if paginator.previous_page %}
@@ -65,29 +58,29 @@ layout: default
           {% endif %}
         </div>
     </div>
-    <!-- <button class="anchor"><i class="fa fa-anchor"></i></button> -->
     <div class="right">
         <div class="wrap">
+            <!-- Recent Posts -->
             <div class="side">
                 <div>
                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                     Recent Posts
                 </div>
                 <ul class="content-ul" recent>
-                    {% for post in site.posts offset: 0 limit: 10  %}
+                    {% for post in site.posts limit: 10  %}
                         <li><a href="{{ post.url }}">{{ post.title }}</a></li>
                     {% endfor %}
                 </ul>
             </div>
 
-            <!-- Content -->
+            <!-- Categories -->
             <div class="side ">
                 <div>
                     <i class="fa fa-th-list"></i>
                     Categories
                 </div>
                 <ul class="content-ul" cate>
-                    {% for category in site.categories order:ascending %}
+                    {% for category in site.categories %}
                     <li>
                         <a href="{{ root_url }}/{{ site.category_dir }}#{{ category | first }}" class="categories-list-item" cate="{{ category | first }}">
                             <span class="name">
@@ -99,7 +92,8 @@ layout: default
                     {% endfor %}
                 </ul>
             </div>
-            <!-- 其他div框放到这里 -->
+
+            <!-- Tags -->
             <div class="side">
                 <div>
                     <i class="fa fa-tags"></i>
@@ -143,18 +137,6 @@ layout: default
                     {% endfor %}
                 </div>
             </div>
-
-            <!-- <div class="side">
-                <div>
-                    <i class="fa fa-external-link"></i>
-                    Links
-                </div>
-                <ul  class="content-ul">
-
-                </ul>
-            </div> -->
         </div>
     </div>
 </div>
-<!-- <script src="{{ "/js/scroll.min.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
-<!-- <script src="{{ "/js/pageContent.js " | prepend: site.baseurl }}" charset="utf-8"></script> -->
