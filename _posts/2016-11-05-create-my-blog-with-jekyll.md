@@ -25,7 +25,7 @@ ruby官网下载安装：[https://www.ruby-lang.org/en/downloads/](https://www.r
 
 在命令提示符中，得到ruby版本号，如下图，即安装成功
 
-![](http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue0e393vj20cu00t748.jpg)
+[![4HHwIx.png](https://z3.ax1x.com/2021/10/02/4HHwIx.png)](https://imgtu.com/i/4HHwIx)
 
 ### 安装RubyGems
 
