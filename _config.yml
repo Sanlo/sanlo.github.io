@@ -18,7 +18,7 @@ github_username: sanlo
 email: 940072028@qq.com
 linkedIn_username: sanlozhang
 
-description_footer: 上下前后左右而求索
+description_footer: 如果你感受到痛苦，那么，你还活着；如果你感受到他人的痛苦，那么，你才是人。
 
 # comments
 # two ways to comment, only choose one, and use your own short name
@@ -28,8 +28,8 @@ disqus_shortname: sanlo
 # Build settings
 theme: minima
 plugins:
-    - jekyll-feed
-    - jekyll-paginate
+  - jekyll-feed
+  - jekyll-paginate
 
 # statistic analysis 统计代码
 # 百度统计 id，将统计代码替换为自己的百度统计id，即
@@ -41,8 +41,8 @@ baidu_tongji_id: 1f7d43af55ce2bec75aa12a2f831af8e
 markdown: kramdown
 
 kramdown:
-    input: GFM
-    syntax_highlighter: rouge
+  input: GFM
+  syntax_highlighter: rouge
 
 # port
 # port: 1234
