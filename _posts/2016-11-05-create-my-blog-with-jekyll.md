@@ -29,125 +29,50 @@ ruby官网下载安装：[https://www.ruby-lang.org/en/downloads/](https://www.r
 
 ### 安装RubyGems
 
-官网下载 [http://rubygems.org/pages/download](http://rubygems.org/pages/download) rubygems-2.4.5.zip
+官网下载 [http://rubygems.org/pages/download](http://rubygems.org/pages/download) rubygems
 
-cd到RubyGems目录
+cd到RubyGems 安装目录，执行安装
 
-![](http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue1l2yscj20gk02amxj.jpg)
-
-执行安装
-
-![](http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue1w8eqnj20bx00hglg.jpg)
+```
+cd D:\下载\rubygems-3.3.12\rubygems-3.3.12	#切换文件目录
+ruby setup.rb       #安装rubygems
+ruby -v     #查看rubygems版本号
+```
 
 ### 用RubyGems安装Jekyll
 
-执行下面的语句安装
+以上两个步骤操作完成后，在 CMD 窗口执行如下命令安装Jekyll：
 
-![](http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue2g2p3uj207x00ft8j.jpg)
+```
+ gem install jekyll   #安装jekyll
+ jekyll -v    #查看jekyll版本号
 
-安装结束画面
-
-![](http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue32drwhj20hv09xq5m.jpg)
+```
 
 至此jekyll就已经安装完毕了，后续就是个性化的自己设定了。
 
-### 创建博客
+### 本地创建博客
 
-在d盘新建一个工作区jekyllWorkspace
+#### 创建博客项目
+```
+jekyll new restlessManBlog   #新建博客
+cd restlessManBlog     #切换目录
+jekyll server      #启动项目
+```
+在浏览器访问当前项目：`http://localhost:4000/`
 
-cd到jekyllWorkspace
+#### 添加MarkDown文档
+在项目根目录下的`_posts`目录创建 markdown 文档。这里注意 md 文档命名要添加 “yyyy-mm-dd”的前缀。
 
-执行jekyll new name创建新的工作区
+例如：`2019-10-11-my-new-blog.md`
 
-![](http://ww3.sinaimg.cn/large/7011d6cfjw1f2ue3lt31nj20cj02nt8u.jpg)
+查看MarkDown的 [基础语法](https://markdown.com.cn/basic-syntax/)，可以获得MarkDown使用简介。
 
-文件结构如下：
-
-![](http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue3ujsybj20ek06wabh.jpg)
-
-cd到博客文件夹，开启服务器
-
-![](http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue47y9lgj20ao00f0sl.jpg)
-
-watch为了检测文件夹内的变化，即修改后不需要重新启动jekyll
-
-我的环境下启动报错(你的可能没有)，再安装yajl-ruby和rouge
-
-![](http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4nelnxj20dd077q49.jpg)
-
-再次启动服务器成功
-
-![](http://ww4.sinaimg.cn/large/7011d6cfjw1f2ue4v42koj20g505bdgy.jpg)
-
-访问 http://localhost:4000/
-
-![](http://ww1.sinaimg.cn/large/7011d6cfjw1f2ue56ckwoj20je0eumz3.jpg)
-
-详细文章页面
-
-![](http://ww2.sinaimg.cn/large/7011d6cfjw1f2ue5f3j9cj20je0gyq7a.jpg)
-
-## 后续
-
-*  整个安装过程参考了jekyll官网，注意jekyll还有一个简体中文官网，不过比较坑（我就被坑了），有些内容没有翻译过来，有可能会走弯路，建议如果想看中文的相关资料，也要中英对照着阅读。[jekyll中文网 http://jekyllcn.com](http://jekyllcn.com), [jekyll英文网 http://jekyllrb.com](http://jekyllrb.com)
-*  jekyll中的css是用sass写的，当然直接在`_sass/_layout.scss`中添加css也是可以的。
-*  本文是用Markdown格式来写的，相关语法可参考： [Markdown 语法说明 (简体中文版) http://wowubuntu.com/markdown/](http://wowubuntu.com/markdown/)
-*  按照本文的说明搭建完博客后，用`github Pages`托管就可以看到了。注意，在github上面好像不支持rouge，所以要push到github上时，我将配置文件_config.yml中的代码高亮改变为`highlighter: pygments`就可以了
-*  博客默认是没有评论系统的，本文的评论系统使用了多说，详细安装办法可访问[多说官网 http://duoshuo.com/](http://duoshuo.com/)，当然也可以使用[搜狐畅言 http://changyan.sohu.com/](http://changyan.sohu.com/)作为评论系统。
-*  也可以绑定自己的域名，如果没有域名，可以在[godaddy http://www.godaddy.com/](http://www.godaddy.com/)上将域名放入购物车等待降价，买之。
-*  祝各位新年快乐！
-
----
-
-## 可能出现的问题
-
-### `hitimes/hitimes (LoadError)`
-
-**错误代码：**
+#### 部署代码到GitHub
 
 ```
-C:/Ruby22/lib/ruby/2.2.0/rubygems/core_ext/kernel_require.rb:54:in `require': cannot load such file -- hitimes/hitimes (LoadError)
-```
-
-**解决方法：**
-
-在stackoverflow上又一个很好的解决方法。[hitimes require error when running jekyll serve on windows 8.1](http://stackoverflow.com/questions/28985481/hitimes-require-error-when-running-jekyll-serve-on-windows-8-1) 虽然上面的题主问的是 win 8.1 系统下的情况，但是同样适用于 win7。下面我简单翻译一下错误原因和解决方法。
-
-> 可能是 Ruby 2.2 和 hitimes-1.2.2-x86-mingw32 中有一些 ABI 变化，少了一些相关的类库。
->
-> 所以卸载 hitimes 并通过 `--platform ruby` 重装即可。代码如下：
+git add .   #git 命令添加所有文件
+git commit  #git 提交文件
+git push    #git 推送代码到远程
 
 ```
-gem uni hitimes
-**Remove ALL versions**
-gem ins hitimes -v 1.2.1 --platform ruby
-```
-
-> 然后将自动重新编译 hitimes 并适用于 Ruby 2.2
-
-下面是我自己的卸载和安装过程：
-
-```
-E:\GitWorkSpace\gaohaoyang.github.io>gem uni hitimes
-
-You have requested to uninstall the gem:
-        hitimes-1.2.2-x86-mingw32
-
-timers-4.0.1 depends on hitimes (>= 0)
-If you remove this gem, these dependencies will not be met.
-Continue with Uninstall? [yN]  y
-Successfully uninstalled hitimes-1.2.2-x86-mingw32
-
-E:\GitWorkSpace\gaohaoyang.github.io>gem ins hitimes -v 1.2.1 --platform ruby
-Fetching: hitimes-1.2.1.gem (100%)
-Temporarily enhancing PATH to include DevKit...
-Building native extensions.  This could take a while...
-Successfully installed hitimes-1.2.1
-Parsing documentation for hitimes-1.2.1
-Installing ri documentation for hitimes-1.2.1
-Done installing documentation for hitimes after 1 seconds
-1 gem installed
-```
-
-
-关于，[hitimes](https://rubygems.org/gems/hitimes/versions/1.2.2) 是一个快速的高效的定时器解决方案库，详情可以去官网查看。
