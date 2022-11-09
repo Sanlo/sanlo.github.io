@@ -95,6 +95,8 @@ MACRO PAUSE ( "Math", "$a + $b = $c", "Square Root of $c = $d", "Square Root of 
 
 **逻辑操作符**
 
+> ***（需Polyworks 2020 IR1及以上版本）***
+
 - `AND` &ensp;**逻辑与**，两个表达式同时为真时，结果为真，否则为假；
 - `OR`  &ensp;&ensp;**逻辑或**，两个表达式只需要一个为真，结果即为真，同时为假时，结果才为假；
 - `NOT` &ensp;**逻辑非**，表达式为真时，返回结果为假，表达式为假时，返回结果为真；
@@ -125,18 +127,19 @@ ENDIF
 - `ELSE`: &emsp;&emsp;当前面所有的判断语句均为假时，执行该分支
 - `ENDIF`: &emsp;&ensp;条件语句退出
 
-[![xvJoIH.jpg](https://s1.ax1x.com/2022/11/07/xvJoIH.jpg)](https://imgse.com/i/xvJoIH)
-
 语法结构如下：
 ``` as 
 IF <Condition_1>
     <Statement_1>
-ELSEIF <Condition_1>
+ELSEIF <Condition_2>
     <Statement_2>
 ELSE
     <Statement_3>
 ENDIF
 ```
+
+![zSAkvj.png](https://s1.ax1x.com/2022/11/09/zSAkvj.png)
+
 #### **循环语句**
 &emsp;&emsp;循环语句用于重复的执行特定的语句，并在每一次循环迭代后，判断当前的循环条件。在宏脚本编程语言中只存在一种循环结构：`WHILE`循环，相关指令如下：
 - `WHILE`: 循环结构开始
@@ -146,23 +149,14 @@ ENDIF
 - `++`: 当前变量（循环变量）累加`1` (与`SET i EXPR ( $i + 1 )`相同 )
 - `--`: 当前变量（循环变量）累减`1` (与`SET i EXPR ( $i - 1 )`相同 )
 
-```mermaid
-    graph TD;
-        A-->B;
-        A-->C;
-        B-->D;
-        C-->D;
-```
-
 语法结构如下：
 ``` as
-DECLARE PolyWorksIter 1
-WHILE $PolyWorksIter <= $PolyWorksSize
-    MACRO ECHO( "PolyWorks Module $PolyWorksIter = $PolyWorks[$PolyWorksIter]" )    
-    ++ PolyWorksIter
+WHILE <Condition>
+    <ProcessCode>
 ENDWHILE
-
 ```
+
+![zSEbXd.png](https://s1.ax1x.com/2022/11/09/zSEbXd.png)
 
 ### **数组**
 &emsp;&emsp;**数组**是由一组元素组成的序列，其中的每个元素都分配一个数字（索引）--它的位置，其中第一次元素的索引为1，第二个元素的索引为2，以此类推。
@@ -171,8 +165,10 @@ ENDWHILE
 > 
 > 数组中的元素的类型可以不同，比如`{5.0, 2, "user"}`就是一个合法的数组
 
-MSCL中提供了操作数组的指令：
+MSCL中提供了完善的操作数组的指令 ：
 
+> ***（需Polyworks 2021 IR1及以上版本）***
+ 
 |宏指令|描述|
 |---|---|
 |MACRO ARRAY ARE_EQUAL|将一个数组与另一个数组进行对比|
@@ -187,3 +183,56 @@ MSCL中提供了操作数组的指令：
 |MACRO ARRAY ELEMENTS SORT STRING|使用指定的排序排列字符串数组|
 
 ### **用户输入**
+
+&emsp;&emsp;用户界面是用户与运行中的宏脚本进行信息交互的途径，用户可以通过键盘输入相应的参数，或者选择用户处理的文件或者文件夹。
+
+#### **基本用户界面**
+&emsp;&emsp;在基本用户界面中用户通常可以一次输入一个参数，通常包括整型，双精度型，字符串型，以及密码类型参数，也支持文件路径和文件夹路径的选择，借助`MACRO INPUT MULTIPLE_PARAMETERS`指令也可以将其合并到一个用户界面中，一次性输入，常用的宏指令如下：
+
+|宏指令|描述|
+|---|---|
+|MACRO INPUT DOUBLE|输入双精度型参数对话框|
+|MACRO INPUT INTEGER|输入整型参数对话框|
+|MACRO INPUT STRING|输入字符串参数对话框|
+|MACRO INPUT PASSWORD|输入密码型参数对话框，用户键盘输入遮盖为`*` |
+|MACRO INPUT QUESTION|提示用户选择【是】或【否】的对话框|
+|MACRO INPUT FILE_PATH|提示用户选择文件路径|
+|MACRO INPUT FOLDER_PATH|提示用户选择文件夹路径|
+|MACRO INPUT PWK_OBJECTS|提示用户选择工作区对象|
+|MACRO INPUT MULTIPLE_PARAMETERS|使用多个参数创建的对话框|
+|MACRO PAUSE|输出信息对话框|
+
+#### **高级用户界面**
+
+> ***（需Polyworks 2020 IR2及以上版本）***
+
+&emsp;&emsp;使用`MACRO INPUT DIALOG_BOX`命令，可以在创建对话框时提供更多可能性，不仅可以实现常规的参数输入，还可以添加**多选列表框**，**单选框**和**复选框**等高级的用户界面组件，这在用户需要多个参数值时非常有用。
+
+效果图如下：
+![zSunOg.png](https://s1.ax1x.com/2022/11/09/zSunOg.png)
+
+<br/>
+
+常用的宏指令如下：
+
+|宏指令|描述|
+|---|---|
+|MACRO INPUT DIALOG_BOX CHECKBOX|将复选框添加到对话框|
+|MACRO INPUT DIALOG_BOX DEFINE|定义一个对话框|
+|MACRO INPUT DIALOG_BOX DROP_DOWN_LIST|将列表框添加到对话框。请注意，可创建单选和多选列表框|
+|MACRO INPUT DIALOG_BOX EDITBOX DOUBLE|将有效值为双精度值的文本框添加到对话框|
+|MACRO INPUT DIALOG_BOX EDITBOX INTEGER|将有效值为整数值的文本框添加到对话框|
+|MACRO INPUT DIALOG_BOX EDITBOX PASSWORD|将密码文本框添加到对话框|
+|MACRO INPUT DIALOG_BOX EDITBOX STRING|将有效值为字符串值的文本框添加到对话框|
+|MACRO INPUT DIALOG_BOX FILE_PATH|将文件路径文本框和浏览按钮添加到对话框。请注意，可创建单个文件路径和多个文件路径|
+|MACRO INPUT DIALOG_BOX FOLDER_PATH|将文件夹路径文本框和浏览按钮添加到对话框|
+|MACRO INPUT DIALOG_BOX LABEL|将标签添加到对话框|
+|MACRO INPUT DIALOG_BOX RADIO_GROUP|将一组选项按钮添加到对话框|
+|MACRO INPUT DIALOG_BOX SECTION|将区段添加到对话框。请注意，区段可展开或折叠|
+|MACRO INPUT DIALOG_BOX SHOW|向用户显示对话框|
+
+&emsp;&emsp;要使用这些命令，首先使用`MACRO INPUT DIALOG_BOX DEFINE`命令定义对话框并为其分配一个标题。然后，使用相应的`MACRO INPUT DIALOG_BOX`命令将所需参数添加到对话框。请注意，它们的显示顺序与输入顺序相同。
+
+## **二.目录树对象操作**
+
+<br/>
