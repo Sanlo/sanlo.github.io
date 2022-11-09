@@ -10,16 +10,14 @@ icon: heart
 
 ## 关于我
 
-!@#$!! shit
+我就是我
 
 ## 联系我
 
 * GitHub：[sanlo](https://github.com/sanlo)
 * email：940072028@qq.com
-* [Weibo](http://weibo.com/nestor_sh)
-* [知乎](https://www.zhihu.com/people/sanlozhang)
 
 ## 关于本站
 
 
-### Update Log
+## Update Log
