@@ -15,7 +15,7 @@ icon: heart
 ## 联系我
 
 * GitHub：[sanlo](https://github.com/sanlo)
-* email：940072028@qq.com
+* Email：940072028@qq.com
 
 ## 关于本站
 
