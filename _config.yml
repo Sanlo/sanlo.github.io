@@ -7,7 +7,7 @@
 
 # Site settings
 title: Sanlo Zhang
-brief-intro: KIP
+# brief-intro: KIP
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://sanlo.github.io" # the base hostname & protocol for your site
 

@@ -97,6 +97,7 @@ $$y=\frac{1}{1+e^-z}\Leftrightarrow ln\frac{y}{1-y}=w^Tx\tag{4}$$
 
 $$ln\frac{p(y=1|x)}{p(y=0|x)}=w^Tx\tag{5}
 $$
+
 进一步我们不难得到在输入为x的情况下，输出类别y分别为1和0的概率为：
 
 $$ 
@@ -111,13 +112,16 @@ $$
 　　因此对于第i个输入数据$$x_i$$，它被划分为$$y_i$$的概率可由公式（7）表示：
 
 $$p(y_i|x_i;w)=p(y_i=1|x_i;w)^{y_i}p(y_i=0|x_i;w)^{1-y_i}\tag{7}$$
+
 公式（7）巧妙之处在于，当$$y_i=1$$时，$$p(y_i=0|x_i;w)^{1-y_i}=1$$；而当$$y_i=0$$时，$$p(y_i=1|x_i;w)^{y_i}=1$$。  
 在极大似然法中，我们假设样本之间都是独立同分布的，因此它们的联合概率就是它们各自概率的乘积。因此关于回归系数$$w$$的极大似然函数可由公式（8）表示：
 
 $$L(w)=\prod_{i=1}^{m}p(y_i=1|x_i;w)^{y_i}p(y_i=0|x_i;w)^{1-y_i}\tag{8}$$
+
 为了便于计算，我们对公式（8）两边同时取对数：
 
 $$lnL(w)=(\prod_{i=1}^{m}p(y_i=1|x_i;w)^{y_i}p(y_i=0|x_i;w)^{1-y_i})\tag{9}$$
+
 根据对数的性质，公式（9）可以逐步写成如下形式：
 
 $$
@@ -135,6 +139,7 @@ $$
 $$
 w^{t+1}=w^t+\alpha\nabla_wlnL(w^t)\tag{11}
 $$
+
 公式（11）中$$\alpha$$表示每次迭代的步进。$$\nabla_w$$表示梯度算子。
 
 根据以上定义，我们求取公式（10）的梯度：  
@@ -167,16 +172,19 @@ $$
 $$
 f(x)\approx f(x_0)+(x-x_0)f'(x_0)\tag{14}
 $$
+
 我们用一阶展开式求解函数的零点：
 
 $$
 f(x_0)+(x-x_0)f'(x_0)=0\tag{15}
 $$
+
 稍作整理，公式（15）可写成如下形式：
 
 $$
 x=x_0-\frac{f(x_0)}{f'(x_0)}\tag{16}
 $$
+
 　　由于一阶展开式只是与原函数近似相等，因此公式（16）中的x并非函数的零点，而只是比x0更接近零点。因此通过对公式（16）迭代可以不断逼近函数零点。
 
 　　**如果是求函数的极值点呢？**
@@ -185,16 +193,19 @@ $$
 $$
 f(x)\approx f(x_0)+(x-x_0)f'(x_0)+\frac{1}{2}(x-x_0)^2f''(x_0)=g(x)\tag{17}
 $$
+
 　　我们知道函数在其一阶导数等于0时取到极值，因此我们求上式(17) g′(x)=0的解：
 
 $$
 g'(x)=f'(x_0)+(x-x_0)f''(x_0)=0\tag{18}
 $$
+
 　　通过像公式（15）一样整理上式（18），可得：
 
 $$
 x=x_0-\frac{f'(x_0)}{f''(x_0)}\tag{19}
 $$
+
 　　**如果输入是多维的变量呢？**  
 　　高维情况的牛顿法迭代公式与公式（19）相似，其如下所示：
 
@@ -214,6 +225,7 @@ H(f(\boldsymbol{x}))=\frac{\partial^2f(\boldsymbol{x})}{\partial\boldsymbol{x}\p
  \frac{\partial^2f}{\partial x_n\partial x_1} & \frac{\partial^2f}{\partial x_n\partial x_2} & \cdots & \frac{\partial^2f}{\partial x^2_n}\\
  \end{bmatrix}\tag{21}
 $$
+
 　　**梯度上升法与牛顿法的比较：**  
 　　梯度法是一阶收敛的，而牛顿法是二阶收敛的。因此牛顿法的迭代次数要少于梯度法，然而`Hessian`的逆矩阵的计算会增加算法的复杂度。  
 　　这个问题又可以通过`Quasi-Newton`方法解决。
@@ -226,6 +238,7 @@ $$
 $$
 \boldsymbol{w}^{t+1}=\boldsymbol{w}^t-\left[\frac{\partial^2lnL(\boldsymbol{w})}{\partial\boldsymbol{w}\partial\boldsymbol{w}^T}\right]^{-1}\frac{\partial lnL(\boldsymbol{w})}{\partial\boldsymbol{w}}\tag{22}
 $$
+
 其中$$\frac{\partial lnL(w)}{\partial w}$$在公式（13）中已求得，而对$$\frac{\partial^2lnL(w)}{\partial w\partial w^T}$$的求解可按照上文所提到的两条向量微分运算方法来计算，因此：
 
 $$
