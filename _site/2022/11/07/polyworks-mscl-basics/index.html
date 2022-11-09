@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta use_mermaid="true" />
+  <title>基于Polyworks的宏脚本编程语言（MSCL）基础</title>
+  <meta name="description" content="Polyworks作为通用测量软件平台，提供了内置的宏脚本编程语言，可以使用基于COM组件的技术调用软件底层指令与功能，实现测量计划自动化编制，和全流程的自动化测量，提供软件的使用效率。" />
+
+  <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css "> <link rel="stylesheet" href="/css/main.css ">
+  <link rel="canonical" href="http://sanlo.github.io/2022/11/07/polyworks-mscl-basics/" />
+  <link rel="alternate" type="application/rss+xml" title="Sanlo Zhang" href="http://sanlo.github.io/feed.xml ">
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Sanlo Zhang</a>
+        <small></small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                        <a href="/">
+                    
+                    <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                            <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>基于Polyworks的宏脚本编程语言（MSCL）基础</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2022-11-07
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#Polyworks" title="Category: Polyworks" rel="category">Polyworks</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+                
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80" title="Tag: 编程语言" rel="tag">编程语言</a-->
+        <a href="/tag/#编程语言" title="Tag: 编程语言" rel="tag">编程语言</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+            <ul id="markdown-toc">
+  <li><a href="#一语法基础" id="markdown-toc-一语法基础"><strong>一.语法基础</strong></a>    <ul>
+      <li><a href="#变量" id="markdown-toc-变量"><strong>变量</strong></a></li>
+      <li><a href="#保留变量" id="markdown-toc-保留变量"><strong>保留变量</strong></a></li>
+      <li><a href="#表达式" id="markdown-toc-表达式"><strong>表达式</strong></a>        <ul>
+          <li><a href="#数学表达式" id="markdown-toc-数学表达式"><strong>数学表达式</strong></a></li>
+          <li><a href="#逻辑表达式" id="markdown-toc-逻辑表达式"><strong>逻辑表达式</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#语句" id="markdown-toc-语句"><strong>语句</strong></a>        <ul>
+          <li><a href="#条件语句" id="markdown-toc-条件语句"><strong>条件语句</strong></a></li>
+          <li><a href="#循环语句" id="markdown-toc-循环语句"><strong>循环语句</strong></a></li>
+        </ul>
+      </li>
+      <li><a href="#数组" id="markdown-toc-数组"><strong>数组</strong></a></li>
+      <li><a href="#用户输入" id="markdown-toc-用户输入"><strong>用户输入</strong></a></li>
+    </ul>
+  </li>
+</ul>
+
+<p>  Polyworks作为通用测量软件平台，提供了内置的宏脚本编程语言，可以使用基于COM组件的技术调用软件底层指令与功能，实现测量计划自动化编制，和全流程的自动化测量，提供软件的使用效率。</p>
+
+<h2 id="一语法基础"><strong>一.语法基础</strong></h2>
+<h3 id="变量"><strong>变量</strong></h3>
+<p>  变量是用于存储和查询信息的容器，在Polyworks中存在三种基本变量类型，包括整型，双精度型和字符串型等</p>
+
+<ul>
+  <li>整型：   整数（无小数点）</li>
+  <li>双精度型： 允许小数点的数字</li>
+  <li>字符串型： 字母和数字字符的序列</li>
+</ul>
+
+<p>  在定义变量时不需要显式的指明变量类型，当为其赋值时，宏脚本内核会自动为其适配变量类型，定义变量使用<code class="language-plaintext highlighter-rouge">DECLEAR</code>指令，变量初始值可以在声明变量是指定，也可以使用<code class="language-plaintext highlighter-rouge">SET</code>指令指定：</p>
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DECLEAR</span> <span class="nx">varName</span>
+<span class="nx">DECLEAR</span> <span class="nx">featureCount</span> <span class="mi">5</span>
+<span class="nx">SET</span> <span class="nx">featureCount</span> <span class="mi">10</span>
+</code></pre></div></div>
+<blockquote>
+  <p>变量名可以由任意非保留变量构成，保留变量包含：<code class="language-plaintext highlighter-rouge">_DOLLAR</code>, <code class="language-plaintext highlighter-rouge">_INSTALL_PATH</code>, <code class="language-plaintext highlighter-rouge">_PI</code>, <code class="language-plaintext highlighter-rouge">_NEWLINE</code>等。在实际编程中，尽可能使用描述性的命名, 别心疼空间, 毕竟相比之下让代码易于新读者理解更重要. 不要用只有项目开发者能理解的缩写, 也不要通过砍掉几个字母来缩写单词。命名方法推荐使用<strong>骆驼式命名法</strong>：<code class="language-plaintext highlighter-rouge">featureCount</code>，和<strong>下划线法</strong><code class="language-plaintext highlighter-rouge">feature_count</code>。</p>
+</blockquote>
+
+<p>  <strong>获取变量值</strong>方法在变量名前添加<code class="language-plaintext highlighter-rouge">$</code>，如果变量存在于字符串中，则需要使用<code class="language-plaintext highlighter-rouge">{ }</code>将变量名包裹起来:</p>
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DECLARE</span> <span class="nx">variable1</span> <span class="s2">"Message 1"</span>
+<span class="nx">MACRO</span> <span class="nx">ECHO</span> <span class="p">(</span> <span class="nx">$variable1</span> <span class="p">)</span>
+<span class="nx">MACRO</span> <span class="nx">ECHO</span> <span class="p">(</span> <span class="s2">"${variable1} followed by extra words"</span> <span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OUTPUT: Message 1
+OUTPUT: Message 1 followed by extra words
+</code></pre></div></div>
+
+<p><strong>变量修饰符</strong>
+  在某些情况下，比如字符串比较，需要将用户输入的字符串转换为小写字母或者大写字符，可以使用<code class="language-plaintext highlighter-rouge">:l</code>将修饰的字符串转化为小写，使用<code class="language-plaintext highlighter-rouge">:u</code>会将修饰的字符串转化大写：</p>
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DECLARE</span> <span class="nx">variable1</span> <span class="s2">"Message 1"</span>
+<span class="nx">MACRO</span> <span class="nx">ECHO</span> <span class="p">(</span> <span class="s2">"${variable1} Uppercase = ${variable1:u}"</span> <span class="p">)</span>
+</code></pre></div></div>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>OUTPUT: Message 1 Uppercase = MESSAGE 1
+</code></pre></div></div>
+
+<h3 id="保留变量"><strong>保留变量</strong></h3>
+<p>  保留变量用于存储与Polyworks环境相关的信息，可以用于查询相关的软件环境信息，主要环境变量如下：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>保留变量</th>
+      <th>变量意义</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>_DOLLAR</td>
+      <td>$</td>
+    </tr>
+    <tr>
+      <td>_QUOTES</td>
+      <td>”</td>
+    </tr>
+    <tr>
+      <td>_PI</td>
+      <td>3.14159</td>
+    </tr>
+    <tr>
+      <td>_NEWLINE</td>
+      <td>换行符</td>
+    </tr>
+    <tr>
+      <td>_INSTALL_PATH</td>
+      <td>Polyworks安装目录</td>
+    </tr>
+    <tr>
+      <td>_PWK_FILES_PATH</td>
+      <td>当前项目_Files目录</td>
+    </tr>
+    <tr>
+      <td>_TEMP_PATH</td>
+      <td>软件临时目录</td>
+    </tr>
+    <tr>
+      <td>_USERCONFIG_PATH</td>
+      <td>用户配置目录</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="表达式"><strong>表达式</strong></h3>
+<h4 id="数学表达式"><strong>数学表达式</strong></h4>
+<ul>
+  <li>数学表达式使用<code class="language-plaintext highlighter-rouge">EXPR</code>和<code class="language-plaintext highlighter-rouge">EXPR_I</code>来获得计算结果，两种不同的地方在于<code class="language-plaintext highlighter-rouge">EXPR_I</code>去除结果的小数部分；</li>
+  <li>基本数学操作符：<code class="language-plaintext highlighter-rouge">+</code>, <code class="language-plaintext highlighter-rouge">-</code>, <code class="language-plaintext highlighter-rouge">*</code>,<code class="language-plaintext highlighter-rouge">/</code>, <code class="language-plaintext highlighter-rouge">%</code> (取模)；</li>
+  <li>基本数学函数：<code class="language-plaintext highlighter-rouge">ABS</code> (取绝对值), <code class="language-plaintext highlighter-rouge">SQRT</code> (平方根), <code class="language-plaintext highlighter-rouge">SIN</code>, <code class="language-plaintext highlighter-rouge">COS</code>, <code class="language-plaintext highlighter-rouge">TAN</code>等等；</li>
+</ul>
+
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DECLARE</span> <span class="nx">a</span> <span class="mi">1</span>
+<span class="nx">DECLARE</span> <span class="nx">b</span> <span class="mi">2</span>
+<span class="nx">DECLARE</span> <span class="nx">c</span>
+<span class="nx">DECLARE</span> <span class="nx">d</span>
+<span class="nx">DECLARE</span> <span class="nx">e</span>
+
+<span class="nx">SET</span> <span class="nx">c</span> <span class="nx">EXPR</span> <span class="p">(</span> <span class="nx">$a</span> <span class="o">+</span> <span class="nx">$b</span> <span class="p">)</span>
+<span class="nx">SET</span> <span class="nx">d</span> <span class="nx">EXPR</span> <span class="p">(</span> <span class="nx">SQRT</span><span class="p">(</span> <span class="nx">$c</span> <span class="p">)</span> <span class="p">)</span>
+<span class="nx">SET</span> <span class="nx">e</span> <span class="nx">EXPR_I</span> <span class="p">(</span> <span class="nx">SQRT</span><span class="p">(</span> <span class="nx">$c</span> <span class="p">)</span> <span class="p">)</span>
+
+<span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Math"</span><span class="p">,</span> <span class="s2">"$a + $b = $c"</span><span class="p">,</span> <span class="s2">"Square Root of $c = $d"</span><span class="p">,</span> <span class="s2">"Square Root of $c (no decimals) = $e"</span> <span class="p">)</span>
+</code></pre></div></div>
+<h4 id="逻辑表达式"><strong>逻辑表达式</strong></h4>
+<p>  在宏脚本语言中，需要使用逻辑表达式判断指令执行的结果和当前变量的状态。</p>
+
+<p><strong>比较操作符</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">&lt;</code>   小于</li>
+  <li><code class="language-plaintext highlighter-rouge">&lt;=</code>  小于等于</li>
+  <li><code class="language-plaintext highlighter-rouge">&gt;</code>   大于</li>
+  <li><code class="language-plaintext highlighter-rouge">&gt;=</code>  大于等于</li>
+  <li><code class="language-plaintext highlighter-rouge">==</code>  等于</li>
+  <li><code class="language-plaintext highlighter-rouge">!=</code>  不等于</li>
+</ul>
+
+<p><strong>逻辑操作符</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">AND</code>  <strong>逻辑与</strong>，两个表达式同时为真时，结果为真，否则为假；</li>
+  <li><code class="language-plaintext highlighter-rouge">OR</code>    <strong>逻辑或</strong>，两个表达式只需要一个为真，结果即为真，同时为假时，结果才为假；</li>
+  <li><code class="language-plaintext highlighter-rouge">NOT</code>  <strong>逻辑非</strong>，表达式为真时，返回结果为假，表达式为假时，返回结果为真；</li>
+</ul>
+
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">IF</span> <span class="nx">$c</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Zero"</span><span class="p">,</span> <span class="s2">"$c equals zero."</span> <span class="p">)</span>
+<span class="nx">ELSEIF</span> <span class="nx">$c</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Smaller than zero"</span><span class="p">,</span> <span class="s2">"$c is negative (&lt;0)."</span> <span class="p">)</span>
+<span class="nx">ELSE</span>
+    <span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Bigger than zero"</span><span class="p">,</span> <span class="s2">"$c is positive (&gt;0)."</span> <span class="p">)</span>
+<span class="nx">ENDIF</span>
+
+<span class="nx">IF</span> <span class="nx">$a</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="nx">AND</span> <span class="nx">$b</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Bigger than zero"</span><span class="p">,</span> <span class="s2">"$a AND $b are both bigger than zero."</span> <span class="p">)</span>
+<span class="nx">ENDIF</span>
+
+<span class="nx">IF</span> <span class="nx">$a</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="nx">OR</span> <span class="nx">$b</span> <span class="o">&gt;</span> <span class="mi">0</span>
+    <span class="nx">MACRO</span> <span class="nx">PAUSE</span> <span class="p">(</span> <span class="s2">"Bigger than zero"</span><span class="p">,</span> <span class="s2">"$a OR $b is bigger than zero."</span> <span class="p">)</span>
+<span class="nx">ENDIF</span>
+</code></pre></div></div>
+
+<h3 id="语句"><strong>语句</strong></h3>
+<h4 id="条件语句"><strong>条件语句</strong></h4>
+<p>  条件语句用于控制程序的执行顺序，条件语句的指令如下：</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">IF</code>:    条件语句的开始，用于判断逻辑表达式</li>
+  <li><code class="language-plaintext highlighter-rouge">ELSEIF</code>:  增加分支判断</li>
+  <li><code class="language-plaintext highlighter-rouge">ELSE</code>:   当前面所有的判断语句均为假时，执行该分支</li>
+  <li><code class="language-plaintext highlighter-rouge">ENDIF</code>:   条件语句退出</li>
+</ul>
+
+<p><a href="https://imgse.com/i/xvJoIH"><img src="https://s1.ax1x.com/2022/11/07/xvJoIH.jpg" alt="xvJoIH.jpg" /></a></p>
+
+<p>语法结构如下：</p>
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">IF</span> <span class="o">&lt;</span><span class="nx">Condition_1</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">Statement_1</span><span class="o">&gt;</span>
+<span class="nx">ELSEIF</span> <span class="o">&lt;</span><span class="nx">Condition_1</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">Statement_2</span><span class="o">&gt;</span>
+<span class="nx">ELSE</span>
+    <span class="o">&lt;</span><span class="nx">Statement_3</span><span class="o">&gt;</span>
+<span class="nx">ENDIF</span>
+</code></pre></div></div>
+<h4 id="循环语句"><strong>循环语句</strong></h4>
+<p>  循环语句用于重复的执行特定的语句，并在每一次循环迭代后，判断当前的循环条件。在宏脚本编程语言中只存在一种循环结构：<code class="language-plaintext highlighter-rouge">WHILE</code>循环，相关指令如下：</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">WHILE</code>: 循环结构开始</li>
+  <li><code class="language-plaintext highlighter-rouge">ENDWHILE</code>: 循环结构结束</li>
+  <li><code class="language-plaintext highlighter-rouge">BREAK</code>: 终止当前循环结构</li>
+  <li><code class="language-plaintext highlighter-rouge">CONTINUE</code>: 跳出本次循环</li>
+  <li><code class="language-plaintext highlighter-rouge">++</code>: 当前变量（循环变量）累加<code class="language-plaintext highlighter-rouge">1</code> (与<code class="language-plaintext highlighter-rouge">SET i EXPR ( $i + 1 )</code>相同 )</li>
+  <li><code class="language-plaintext highlighter-rouge">--</code>: 当前变量（循环变量）累减<code class="language-plaintext highlighter-rouge">1</code> (与<code class="language-plaintext highlighter-rouge">SET i EXPR ( $i - 1 )</code>相同 )</li>
+</ul>
+
+<pre><code class="language-mermaid">    graph TD;
+        A--&gt;B;
+        A--&gt;C;
+        B--&gt;D;
+        C--&gt;D;
+</code></pre>
+
+<p>语法结构如下：</p>
+<div class="language-as highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">DECLARE</span> <span class="nx">PolyWorksIter</span> <span class="mi">1</span>
+<span class="nx">WHILE</span> <span class="nx">$PolyWorksIter</span> <span class="o">&lt;=</span> <span class="nx">$PolyWorksSize</span>
+    <span class="nx">MACRO</span> <span class="nx">ECHO</span><span class="p">(</span> <span class="s2">"PolyWorks Module $PolyWorksIter = $PolyWorks[$PolyWorksIter]"</span> <span class="p">)</span>    
+    <span class="o">++</span> <span class="nx">PolyWorksIter</span>
+<span class="nx">ENDWHILE</span>
+
+</code></pre></div></div>
+
+<h3 id="数组"><strong>数组</strong></h3>
+<p>  <strong>数组</strong>是由一组元素组成的序列，其中的每个元素都分配一个数字（索引）–它的位置，其中第一次元素的索引为1，第二个元素的索引为2，以此类推。</p>
+
+<blockquote>
+  <p>MSCL中的仅支持一维数组，不支持二维或三维等高维数组；</p>
+
+  <p>数组中的元素的类型可以不同，比如<code class="language-plaintext highlighter-rouge">{5.0, 2, "user"}</code>就是一个合法的数组</p>
+</blockquote>
+
+<p>MSCL中提供了操作数组的指令：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>宏指令</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>MACRO ARRAY ARE_EQUAL</td>
+      <td>将一个数组与另一个数组进行对比</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS AT_INDEXES</td>
+      <td>返回包含位于指定索引处的元素的数组</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS COUNT_OF</td>
+      <td>返回在数组中找到的元素的出现次数</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS INDEXES_OF</td>
+      <td>返回数组的值等于给定元素的所有对应索引</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS INDEX_OF</td>
+      <td>返回对应的数组值等于给定元素的最低索引</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS INSERT AT_INDEX</td>
+      <td>将包含元素的给定数组插入到数组的给定索引处</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS REMOVE AT_INDEXES</td>
+      <td>从数组的指定索引处删除元素</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS SORT DOUBLE</td>
+      <td>使用指定的排序排列双精度数组</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS SORT INTEGER</td>
+      <td>使用指定的排序排列整形数组</td>
+    </tr>
+    <tr>
+      <td>MACRO ARRAY ELEMENTS SORT STRING</td>
+      <td>使用指定的排序排列字符串数组</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="用户输入"><strong>用户输入</strong></h3>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2022/04/23/Shanghai-is-a-great-river/">上海是预示未来一百年的大河</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+    </div>
+</div>
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <!-- <li><a href="#similar_posts">Similar Posts123</a></li>
+                    <li><a href="#comments">Comments</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+
+
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="description"> 如果你感受到痛苦，那么，你还活着；如果你感受到他人的痛苦，那么，你才是人。 </p>
+    <p class="contact">
+      Contact me at: 
+      <a href="https://github.com/sanlo" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   <a href="mailto:940072028@qq.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>  
+      <a href="https://www.linkedin.com/in/sanlozhang" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a> 
+    </p>
+    <p class="power">
+      <span> Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>. </span>
+    </p>
+  </div>
+</footer>
+
+    <div class="back-to-top">
+    <a href="#top" class="scroll">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/scroll.min.js " charset="utf-8"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+
+</html>

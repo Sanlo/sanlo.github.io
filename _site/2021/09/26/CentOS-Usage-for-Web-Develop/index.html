@@ -1,0 +1,1136 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta use_mermaid="true" />
+  <title>基于Web开发的CentOS使用</title>
+  <meta name="description" content="本文重点是基于一名web开发人员所需要的CentOS知识体系，介绍一些必要的概念、常用的命令，和使用案例。" />
+
+  <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css "> <link rel="stylesheet" href="/css/main.css ">
+  <link rel="canonical" href="http://sanlo.github.io/2021/09/26/CentOS-Usage-for-Web-Develop/" />
+  <link rel="alternate" type="application/rss+xml" title="Sanlo Zhang" href="http://sanlo.github.io/feed.xml ">
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Sanlo Zhang</a>
+        <small></small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                        <a href="/">
+                    
+                    <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                            <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>基于Web开发的CentOS使用</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2021-09-26
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#CentOS" title="Category: CentOS" rel="category">CentOS</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+                
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#System" title="Tag: System" rel="tag">System</a-->
+        <a href="/tag/#System" title="Tag: System" rel="tag">System</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+            <ul id="markdown-toc">
+  <li><a href="#系统服务管理" id="markdown-toc-系统服务管理"><strong>系统服务管理</strong></a>    <ul>
+      <li><a href="#systemd的基本概念" id="markdown-toc-systemd的基本概念"><strong>systemd的基本概念</strong></a></li>
+      <li><a href="#systemd常用命令" id="markdown-toc-systemd常用命令"><strong>systemd常用命令</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#文件系统" id="markdown-toc-文件系统"><strong>文件系统</strong></a>    <ul>
+      <li><a href="#文档权限" id="markdown-toc-文档权限"><strong>文档权限</strong></a></li>
+      <li><a href="#更改文件属性" id="markdown-toc-更改文件属性"><strong>更改文件属性</strong></a></li>
+      <li><a href="#文件目录管理" id="markdown-toc-文件目录管理"><strong>文件目录管理</strong></a></li>
+      <li><a href="#查看文档内容" id="markdown-toc-查看文档内容"><strong>查看文档内容</strong></a></li>
+      <li><a href="#linux-链接概念" id="markdown-toc-linux-链接概念"><strong>Linux 链接概念</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#网络管理" id="markdown-toc-网络管理"><strong>网络管理</strong></a>    <ul>
+      <li><a href="#修改网络配置文件参数" id="markdown-toc-修改网络配置文件参数"><strong>修改网络配置文件参数</strong></a></li>
+      <li><a href="#网络连接管理命令-nmcli" id="markdown-toc-网络连接管理命令-nmcli"><strong>网络连接管理命令 nmcli</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#进程管理" id="markdown-toc-进程管理"><strong>进程管理</strong></a></li>
+  <li><a href="#vim的使用入门" id="markdown-toc-vim的使用入门"><strong>Vim的使用入门</strong></a>    <ul>
+      <li><a href="#命令模式" id="markdown-toc-命令模式"><strong>命令模式</strong></a></li>
+      <li><a href="#输入模式" id="markdown-toc-输入模式"><strong>输入模式</strong></a></li>
+      <li><a href="#底线命令模式" id="markdown-toc-底线命令模式"><strong>底线命令模式</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#软件包的管理" id="markdown-toc-软件包的管理"><strong>软件包的管理</strong></a>    <ul>
+      <li><a href="#yum工具" id="markdown-toc-yum工具"><strong><code class="language-plaintext highlighter-rouge">yum</code>工具</strong></a></li>
+      <li><a href="#安装源码包" id="markdown-toc-安装源码包"><strong>安装源码包</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#系统状态监控" id="markdown-toc-系统状态监控"><strong>系统状态监控</strong></a>    <ul>
+      <li><a href="#当前系统打开文件" id="markdown-toc-当前系统打开文件"><strong>当前系统打开文件</strong></a></li>
+      <li><a href="#如何查看系统变量" id="markdown-toc-如何查看系统变量"><strong>如何查看系统变量</strong></a></li>
+      <li><a href="#监控系统的状态" id="markdown-toc-监控系统的状态"><strong>监控系统的状态</strong></a></li>
+      <li><a href="#用vmstat命令查看系统具体负载" id="markdown-toc-用vmstat命令查看系统具体负载"><strong>用<code class="language-plaintext highlighter-rouge">vmstat</code>命令查看系统具体负载</strong></a></li>
+      <li><a href="#用top命令显示进程所占的系统资源" id="markdown-toc-用top命令显示进程所占的系统资源"><strong>用top命令显示进程所占的系统资源</strong></a></li>
+      <li><a href="#监控网卡流量" id="markdown-toc-监控网卡流量"><strong>监控网卡流量</strong></a></li>
+      <li><a href="#使用free命令查看内存使用状况" id="markdown-toc-使用free命令查看内存使用状况"><strong>使用free命令查看内存使用状况</strong></a></li>
+      <li><a href="#使用ps命令查看系统进程" id="markdown-toc-使用ps命令查看系统进程"><strong>使用ps命令查看系统进程</strong></a></li>
+      <li><a href="#使用netstat命令查看网络情况" id="markdown-toc-使用netstat命令查看网络情况"><strong>使用netstat命令查看网络情况</strong></a></li>
+    </ul>
+  </li>
+  <li><a href="#ssh安全登录" id="markdown-toc-ssh安全登录"><strong>SSH安全登录</strong></a>    <ul>
+      <li><a href="#使用密码登录" id="markdown-toc-使用密码登录"><strong>使用密码登录</strong></a></li>
+      <li><a href="#使用密钥认证登录" id="markdown-toc-使用密钥认证登录"><strong>使用密钥认证登录</strong></a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="系统服务管理"><strong>系统服务管理</strong></h2>
+<p>本文基于CentOS 8进行介绍，自从CentOS 7开始，CentOS的服务管理工具由SysV改为了<strong>systemd</strong>。<strong>Systemd</strong>的设计目标是，为系统的启动和管理提供一套完整的解决方案。</p>
+
+<h3 id="systemd的基本概念"><strong>systemd的基本概念</strong></h3>
+<p>systemd把系统的各项资源（包括各个服务、设备等）都看作是<strong>unit</strong>，<strong>unit</strong>有许多种类，我们目前关心的是<strong>service</strong>和<strong>target</strong>。这里的<strong>service</strong>并不是什么新概念，因此只解释一下<strong>target</strong>：<strong>target</strong>是多个<strong>unit</strong>的组合，启动一个<strong>target</strong>也就相当于启动其中包含的所有<strong>unit</strong>；<strong>SysV</strong>中的run level在systemd里被target所取代，例如系统以多用户文字模式(runlevel 3)启动时，就会启动<strong>multi-user.target</strong>，而以图形界面模式(runlevel 5)启动时，则会启动<strong>graphical.target</strong>；target之间并非互斥的，因此可以同时启动多个<strong>target</strong>。</p>
+
+<p>我们可以用<code class="language-plaintext highlighter-rouge">systemctl list-dependencies multi-user.target</code>来列举<strong>multi-user.target</strong>所包含的内容。target是可以嵌套的。</p>
+
+<p><strong>查看systemd管理的所有服务</strong></p>
+
+<p>使用<code class="language-plaintext highlighter-rouge">systemctl list-units --all --type=service</code> ：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># systemctl list-units --all --type=service
+  UNIT                                   LOAD      ACTIVE   SUB     DESCRIPTION
+  aegis.service                          loaded    active   running LSB: aegis update.
+  agentwatch.service                     loaded    active   exited  SYSV: Starts and stops guest agent
+  aliyun-util.service                    loaded    active   exited  Initial Aliyun Jobs
+  aliyun.service                         loaded    active   running Aliyun Service Daemon
+</code></pre></div></div>
+<p>这些服务对应的启动脚本文件保存在<code class="language-plaintext highlighter-rouge">/usr/lib/systemd/system</code>。</p>
+
+<h3 id="systemd常用命令"><strong>systemd常用命令</strong></h3>
+
+<blockquote>
+  <p># systemctl enable crond.service // 让某个服务开机自启(.service可以省略)<br />
+# systemctl disable crond          // 不让开机自启<br />
+# systemctl status crond           // 查看服务状态<br />
+# systemctl start crond            // 启动某个服务<br />
+# systemctl stop crond             // 停止某个服务<br />
+# systemctl restart crond          //重启某个服务<br />
+# systemctl reload *               //重新加载服务配置文件<br />
+# systemctl is-enabled crond       // 查询服务是否开机启动</p>
+</blockquote>
+
+<hr />
+<h2 id="文件系统"><strong>文件系统</strong></h2>
+<h3 id="文档权限"><strong>文档权限</strong></h3>
+<p>Linux 系统是一种典型的多用户系统，不同的用户处于不同的地位，拥有不同的权限。
+为了保护系统的安全性，Linux 系统对不同的用户访问同一文件（包括目录文件）的权限做了不同的规定。
+在 Linux 中我们通常使用以下两个命令来修改文件或目录的所属用户与权限：</p>
+
+<ul>
+  <li>chown (change ownerp) ： 修改所属用户与组。</li>
+  <li>chmod (change mode) ： 修改用户的权限。</li>
+</ul>
+
+<p>在 Linux 中我们可以使用 ll 或者 ls –l 命令来显示一个文件的属性以及文件所属的用户和组，如：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@www /]# ls -l
+total 64
+dr-xr-xr-x   2 root root 4096 Dec 14  2012 bin
+dr-xr-xr-x   4 root root 4096 Apr 19  2012 boot
+……
+</code></pre></div></div>
+<p>属性代码第一位所代表的意义：</p>
+
+<ul>
+  <li>当为 <code class="language-plaintext highlighter-rouge">d</code> 则是目录</li>
+  <li>当为 <code class="language-plaintext highlighter-rouge">-</code> 则是文件</li>
+  <li>若是 <code class="language-plaintext highlighter-rouge">l</code> 则表示为链接文档(link file)</li>
+  <li>若是 <code class="language-plaintext highlighter-rouge">b</code> 则表示为装置文件里面的可供储存的接口设备(可随机存取装置)</li>
+  <li>若是 <code class="language-plaintext highlighter-rouge">c</code> 则表示为装置文件里面的串行端口设备，例如键盘、鼠标(一次性读取装置)</li>
+</ul>
+
+<p>接下来的字符中，以三个为一组，且均为 <code class="language-plaintext highlighter-rouge">rwx</code> 的三个参数的组合，分别对应<strong>用户</strong>，<strong>用户组</strong>，与<strong>其他用户</strong>。其中， <code class="language-plaintext highlighter-rouge">r</code> 代表可读(read)、 <code class="language-plaintext highlighter-rouge">w</code> 代表可写(write)、 <code class="language-plaintext highlighter-rouge">x</code> 代表可执行(execute)。 要注意的是，这三个权限的位置不会改变，如果没有权限，就会出现减号 <code class="language-plaintext highlighter-rouge">-</code> 而已</p>
+
+<h3 id="更改文件属性"><strong>更改文件属性</strong></h3>
+<p><strong>chgrp：更改文件属组</strong></p>
+
+<p>语法：</p>
+<blockquote>
+  <p>chgrp [-R] 属组名 文件名</p>
+</blockquote>
+
+<p>参数选项：</p>
+<ul>
+  <li>-R：表示递归更改文件属性，使用该参数时，该目录下的所有文件属组都会更改</li>
+</ul>
+
+<p><strong>chown：更改文件属主，也可以同时更改文件属组</strong></p>
+
+<p>语法：</p>
+<blockquote>
+  <p>chown [–R] 属主名 文件名<br />
+chown [-R] 属主名：属组名 文件名</p>
+</blockquote>
+
+<p>参数选项：</p>
+<ul>
+  <li>-R：递归更改文件属组</li>
+</ul>
+
+<p><strong>chmod：更改文件9个属性</strong></p>
+
+<p>Linux文件属性有两种设置方法，一种是数字，一种是符号。</p>
+
+<p>Linux 文件的基本权限就有九个，分别是 <strong>owner/group/others(拥有者/组/其他)</strong> 三种身份各有自己的 <strong>read/write/execute</strong> 权限。</p>
+
+<p>各权限的分数对照表如下：</p>
+<ul>
+  <li>r:4</li>
+  <li>w:2</li>
+  <li>x:1</li>
+</ul>
+
+<p>如果需要设置的权限是<code class="language-plaintext highlighter-rouge">rwx</code>,则对应的数值为<code class="language-plaintext highlighter-rouge">4+2+1=7</code>，如果权限为<code class="language-plaintext highlighter-rouge">r-x</code>，则对应<code class="language-plaintext highlighter-rouge">4+0+1=5</code>。</p>
+
+<p>如果要将文件的权限变成 <code class="language-plaintext highlighter-rouge">-rwxr-xr--</code> 呢？那么权限的分数就成为 <code class="language-plaintext highlighter-rouge">[4+2+1][4+0+1][4+0+0]=754</code>。</p>
+
+<p>如果使用符号类型来改变文件权限，可以使用<code class="language-plaintext highlighter-rouge">u</code>, <code class="language-plaintext highlighter-rouge">g</code>, <code class="language-plaintext highlighter-rouge">o</code>, <code class="language-plaintext highlighter-rouge">a</code>来表示用户（<strong>user</strong>），用户组(<strong>group</strong>)，其他用户(<strong>other</strong>)和所有身份（<strong>all</strong>）。使用<code class="language-plaintext highlighter-rouge">+</code>，<code class="language-plaintext highlighter-rouge">-</code>，<code class="language-plaintext highlighter-rouge">=</code>表示权限加入，除去，和设定。例如：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>chmod u=rwx, g=rx,o-w myfile 
+</code></pre></div></div>
+
+<h3 id="文件目录管理"><strong>文件目录管理</strong></h3>
+<p>Linux的目录结构为树状结构，最顶级的目录为根目录 <code class="language-plaintext highlighter-rouge">/</code>,当前用户的<code class="language-plaintext highlighter-rouge">home</code>为<code class="language-plaintext highlighter-rouge">~</code>。</p>
+
+<p><strong>处理目录的常用命令</strong></p>
+
+<blockquote>
+  <p>ls（英文全拼：list files）: 列出目录及文件名<br />
+cd（英文全拼：change directory）：切换目录<br />
+pwd（英文全拼：print work directory）：显示目前的目录<br />
+mkdir（英文全拼：make directory）：创建一个新的目录<br />
+rmdir（英文全拼：remove directory）：删除一个空的目录<br />
+cp（英文全拼：copy file）: 复制文件或目录<br />
+rm（英文全拼：remove）: 删除文件或目录<br />
+mv（英文全拼：move file）: 移动文件与目录，或修改文件与目录的名称</p>
+</blockquote>
+
+<p><strong>ls 列出目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@www ~]# ls [-aAdfFhilnrRSt] 目录名称
+[root@www ~]# ls [--color={never,auto,always}] 目录名称
+[root@www ~]# ls [--full-time] 目录名称
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>a ：全部的文件，连同隐藏文件( 开头为 . 的文件) 一起列出来(常用)</li>
+  <li>d ：仅列出目录本身，而不是列出目录内的文件数据(常用)</li>
+  <li>l ：长数据串列出，包含文件的属性与权限等等数据；(常用)</li>
+</ul>
+
+<p><strong>pwd 显示目前所在的目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@www ~]# pwd [-P]
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>P ：显示出确实的路径，而非使用连结 (link) 路径</li>
+</ul>
+
+<p><strong>mkdir 创建新目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mkdir [-mp] 目录名称
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>m ：配置文件的权限喔！直接配置，不需要看默认权限 (umask) 的脸色～</li>
+  <li>p ：帮助你直接将所需要的目录(包含上一级目录)递归创建起来！</li>
+</ul>
+
+<p><strong>rmdir 删除空的目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rmdir [-p] 目录名称
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>p ：连同上一级『空的』目录也一起删除，与<code class="language-plaintext highlighter-rouge">mkdir</code>类似</li>
+</ul>
+
+<p><strong>cp 复制文件或目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[root@www ~]# cp [-adfilprsu] 来源档(source) 目标档(destination)
+[root@www ~]# cp [options] source1 source2 source3 .... directory
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>a：相当於 -pdr 的意思，至於 pdr 请参考下列说明；(常用)</li>
+  <li>d：若来源档为连结档的属性(link file)，则复制连结档属性而非文件本身；</li>
+  <li>f：为强制(force)的意思，若目标文件已经存在且无法开启，则移除后再尝试一次；</li>
+  <li>i：若目标档(destination)已经存在时，在覆盖时会先询问动作的进行(常用)</li>
+  <li>l：进行硬式连结(hard link)的连结档创建，而非复制文件本身；</li>
+  <li>p：连同文件的属性一起复制过去，而非使用默认属性(备份常用)；</li>
+  <li>r：递归持续复制，用於目录的复制行为；(常用)</li>
+  <li>s：复制成为符号连结档 (symbolic link)，亦即『捷径』文件；</li>
+  <li>u：若 destination 比 source 旧才升级 destination ！</li>
+</ul>
+
+<p><strong>rm 移除文件或目录</strong></p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rm [-fir] 文件或目录
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>f ：就是 force 的意思，忽略不存在的文件，不会出现警告信息；</li>
+  <li>i ：互动模式，在删除前会询问使用者是否动作</li>
+  <li>r ：递归删除啊！最常用在目录的删除了！这是非常危险的选项！！！</li>
+</ul>
+
+<p><strong>mv 移动文件与目录，或修改名称</strong></p>
+
+<p>语法：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">[</span>root@www ~]# <span class="nb">mv</span> <span class="o">[</span><span class="nt">-fiu</span><span class="o">]</span> <span class="nb">source </span>destination
+<span class="o">[</span>root@www ~]# <span class="nb">mv</span> <span class="o">[</span>options] source1 source2 source3 .... directory
+</code></pre></div></div>
+<p>选项：</p>
+<ul>
+  <li>f ：force 强制的意思，如果目标文件已经存在，不会询问而直接覆盖；</li>
+  <li>i ：若目标文件 (destination) 已经存在时，就会询问是否覆盖！</li>
+  <li>u ：若目标文件已经存在，且 source 比较新，才会升级 (update)</li>
+</ul>
+
+<h3 id="查看文档内容"><strong>查看文档内容</strong></h3>
+<p>常用命令：</p>
+<ul>
+  <li>cat  由第一行开始显示文件内容</li>
+  <li>tac  从最后一行开始显示，可以看出 tac 是 cat 的倒着写！</li>
+  <li>nl   显示的时候，顺道输出行号！</li>
+  <li>more 一页一页的显示文件内容</li>
+  <li>less 与 more 类似，但是比 more 更好的是，他可以往前翻页！</li>
+  <li>head 只看头几行</li>
+  <li>tail 只看尾巴几行</li>
+</ul>
+
+<h3 id="linux-链接概念"><strong>Linux 链接概念</strong></h3>
+<p>Linux 链接分两种，一种被称为硬链接（Hard Link），另一种被称为符号链接（Symbolic Link）。默认情况下，<code class="language-plaintext highlighter-rouge">ln</code> 命令产生硬链接，符号链接需要通过<code class="language-plaintext highlighter-rouge">ln -s</code>生成。</p>
+
+<p><strong>硬连接</strong></p>
+
+<p>硬连接指通过索引节点来进行连接。在 Linux 的文件系统中，保存在磁盘分区中的文件不管是什么类型都给它分配一个编号，称为索引节点号(Inode Index)。在 Linux 中，多个文件名指向同一索引节点是存在的。比如：A 是 B 的硬链接（A 和 B 都是文件名），则 A 的目录项中的 inode 节点号与 B 的目录项中的 inode 节点号相同，即一个 inode 节点对应两个不同的文件名，两个文件名指向同一个文件，A 和 B 对文件系统来说是完全平等的。删除其中任何一个都不会影响另外一个的访问。</p>
+
+<p>硬连接的作用是允许一个文件拥有多个有效路径名，这样用户就可以建立硬连接到重要文件，以防止“误删”的功能。其原因如上所述，因为对应该目录的索引节点有一个以上的连接。只删除一个连接并不影响索引节点本身和其它的连接，只有当最后一个连接被删除后，文件的数据块及目录的连接才会被释放。也就是说，文件真正删除的条件是与之相关的所有硬连接文件均被删除。</p>
+
+<p><strong>软连接</strong></p>
+
+<p>另外一种连接称之为符号连接（Symbolic Link），也叫软连接。软链接文件有类似于 Windows 的快捷方式。它实际上是一个特殊的文件。在符号连接中，文件实际上是一个文本文件，其中包含的有另一文件的位置信息。比如：A 是 B 的软链接（A 和 B 都是文件名），A 的目录项中的 inode 节点号与 B 的目录项中的 inode 节点号不相同，A 和 B 指向的是两个不同的 inode，继而指向两块不同的数据块。但是 A 的数据块中存放的只是 B 的路径名（可以根据这个找到 B 的目录项）。A 和 B 之间是“主从”关系，如果 B 被删除了，A 仍然存在（因为两个是不同的文件），但指向的是一个无效的链接。</p>
+
+<hr />
+<h2 id="网络管理"><strong>网络管理</strong></h2>
+
+<h3 id="修改网络配置文件参数"><strong>修改网络配置文件参数</strong></h3>
+<p>Linux系统的网络配置文件位于<code class="language-plaintext highlighter-rouge">/etc/sysconfig/network-scripts/</code>下，通常文件名以<code class="language-plaintext highlighter-rouge">ifcfg</code>开始。可以通过如下命令打开并修改网络参数：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+</code></pre></div></div>
+<p>打开后的文件如下所示：</p>
+<div class="language-ini highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="py">TYPE</span><span class="p">=</span><span class="s">Ethernet</span>
+<span class="py">PROXY_METHOD</span><span class="p">=</span><span class="s">none</span>
+<span class="py">BROWSER_ONLY</span><span class="p">=</span><span class="s">no</span>
+<span class="py">BOOTPROTO</span><span class="p">=</span><span class="s">static                // static | dhcp</span>
+<span class="py">DEFROUTE</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">IPV4_FAILURE_FATAL</span><span class="p">=</span><span class="s">no</span>
+<span class="py">IPV6INIT</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">NAME</span><span class="p">=</span><span class="s">enp0s3</span>
+<span class="py">UUID</span><span class="p">=</span><span class="s">08de17bf-66fd-4e34-b37e-abc12d978229</span>
+<span class="py">DEVICE</span><span class="p">=</span><span class="s">enp0s3</span>
+<span class="py">ONBOOT</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">PREFIX</span><span class="p">=</span><span class="s">24</span>
+<span class="py">IPADDR</span><span class="p">=</span><span class="s">192.168.0.150            // ip地址</span>
+<span class="py">NETMASK</span><span class="p">=</span><span class="s">255.255.255.0</span>
+<span class="py">GATEWAY</span><span class="p">=</span><span class="s">192.168.0.1             // 网关地址</span>
+<span class="py">IPV6_AUTOCONF</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">IPV6_DEFROUTE</span><span class="p">=</span><span class="s">yes</span>
+<span class="py">IPV6_FAILURE_FATAL</span><span class="p">=</span><span class="s">no</span>
+<span class="py">IPV6_ADDR_GEN_MODE</span><span class="p">=</span><span class="s">stable-privacy</span>
+</code></pre></div></div>
+<p>主要需要修改如下位置：</p>
+<ul>
+  <li>IPADDR = “[在这里输入你的静态 IP]”</li>
+  <li>GATEWAY = “[输入你的默认网关]”</li>
+  <li>NETMASK = “[输入你的网关]”</li>
+  <li>DNS1 = “[DNS 地址]”</li>
+  <li>DNS2 = “[DNS 地址]”</li>
+</ul>
+
+<p>为了是网络配置生效，执行以下命令，其中<code class="language-plaintext highlighter-rouge">enp0s3</code>联网代号：</p>
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nmcli connection up enp0s3
+</code></pre></div></div>
+
+<h3 id="网络连接管理命令-nmcli"><strong>网络连接管理命令 nmcli</strong></h3>
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nmcli [OPTIONS] OBJECT &lt;command&gt;
+</code></pre></div></div>
+<p>参数说明：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>参数</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-t</td>
+      <td>简洁输出，删除多余的空格</td>
+    </tr>
+    <tr>
+      <td>-p</td>
+      <td>人性化输出，输出很漂亮</td>
+    </tr>
+    <tr>
+      <td>-n</td>
+      <td>优化输出，有两个选项tabular(不推荐)和multiline(默认)</td>
+    </tr>
+    <tr>
+      <td>-c</td>
+      <td>颜色开关，控制颜色输出(默认启用)</td>
+    </tr>
+    <tr>
+      <td>-f</td>
+      <td>过滤字段，all为过滤所有字段，common打印出可过滤的字段</td>
+    </tr>
+    <tr>
+      <td>-g</td>
+      <td>过滤字段，适用于脚本，以“:”分隔</td>
+    </tr>
+    <tr>
+      <td>-w</td>
+      <td>超时时间</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>选项说明：</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>OBJECT</th>
+      <th>Comment</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>g[eneral]</td>
+      <td>NetworkManager’s general status and operations</td>
+    </tr>
+    <tr>
+      <td>n[etworking]</td>
+      <td>overall networking control</td>
+    </tr>
+    <tr>
+      <td>r[adio]</td>
+      <td>NetworkManager radio switches</td>
+    </tr>
+    <tr>
+      <td>c[onnection]</td>
+      <td>NetworkManager’s connections</td>
+    </tr>
+    <tr>
+      <td>d[evice]</td>
+      <td>devices managed by NetworkManager</td>
+    </tr>
+    <tr>
+      <td>a[gent]</td>
+      <td>NetworkManager secret agent or polkit agent</td>
+    </tr>
+    <tr>
+      <td>m[onitor]</td>
+      <td>monitor NetworkManager changes</td>
+    </tr>
+  </tbody>
+</table>
+
+<hr />
+<h2 id="进程管理"><strong>进程管理</strong></h2>
+
+<p><strong>暂停以及恢复当前进程的执行</strong></p>
+<ul>
+  <li>使用<code class="language-plaintext highlighter-rouge">Ctrl+D</code>暂停当前进程。</li>
+  <li>进程被暂停后，使用<code class="language-plaintext highlighter-rouge">fg</code>把进程恢复到前台继续执行。</li>
+  <li>进程被暂停后，使用bg把进程恢复到后台继续执行。</li>
+  <li>如有多个进程被暂停，则可通过<code class="language-plaintext highlighter-rouge">jobs</code>命令查看其编号，再通过<code class="language-plaintext highlighter-rouge">fg</code> [被暂停进程编号]或<code class="language-plaintext highlighter-rouge">bg</code> [被暂停进程编号]，来恢复执行。</li>
+</ul>
+
+<p><strong>如何让linux命令在后台执行</strong></p>
+<ul>
+  <li>在命令后加上符号&amp;即可让linux命令在后台执行，例如<code class="language-plaintext highlighter-rouge">sellp 30 &amp;</code>。</li>
+  <li>如该linux命令正在前台运行，可使用<code class="language-plaintext highlighter-rouge">Ctrl+D</code>暂停后，再使用bg把进程恢复到后台继续执行。</li>
+</ul>
+
+<p><strong>如何让后台正在运行的进程转到前台来</strong></p>
+<ol>
+  <li>对于所有运行的程序，我们可以用<code class="language-plaintext highlighter-rouge">jobs –l</code>指令查看，此时记住想要转到前台运行的进程的编号。</li>
+  <li>我们可以用<code class="language-plaintext highlighter-rouge">fg %[number]</code>指令把一个程序调到前台来运行。</li>
+</ol>
+
+<p><strong>使用kill命令结束一个进程</strong>
+<code class="language-plaintext highlighter-rouge">kill</code>命令的语法是<code class="language-plaintext highlighter-rouge">kill</code> 进程的<code class="language-plaintext highlighter-rouge">pid</code>；有时这样并不能终止进程，可以考虑使用<code class="language-plaintext highlighter-rouge">kill -9 </code>进程的<code class="language-plaintext highlighter-rouge">pid</code>，这会强制终止一个进程。</p>
+
+<p>进程的<code class="language-plaintext highlighter-rouge">pid</code>可以通过<code class="language-plaintext highlighter-rouge">top</code>命令或<code class="language-plaintext highlighter-rouge">ps</code>命令进行查看。</p>
+
+<hr />
+<h2 id="vim的使用入门"><strong>Vim的使用入门</strong></h2>
+<p>所有的 Unix Like 系统都会内建 vi 文书编辑器，其他的文书编辑器则不一定会存在。但是目前我们使用比较多的是 vim 编辑器。vim 具有程序编辑的能力，可以主动的以字体颜色辨别语法的正确性，方便程序设计。</p>
+
+<p>基本上 vi/vim 共分为三种模式，分别是命令模式（<strong>Command mode</strong>），输入模式（<strong>Insert mode</strong>）和底线命令模式（<strong>Last line mode</strong>）。 这三种模式的作用分别是：</p>
+
+<h3 id="命令模式"><strong>命令模式</strong></h3>
+<p>用户刚刚启动 vi/vim，便进入了命令模式。</p>
+
+<p>此状态下敲击键盘动作会被Vim识别为命令，而非输入字符。比如我们此时按下<code class="language-plaintext highlighter-rouge">i</code>，并不会输入一个字符，<code class="language-plaintext highlighter-rouge">i</code>被当作了一个命令。</p>
+
+<p>以下是常用的几个命令：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">i</code> 切换到输入模式，以输入字符。</li>
+  <li><code class="language-plaintext highlighter-rouge">x</code> 删除当前光标所在处的字符。</li>
+  <li><code class="language-plaintext highlighter-rouge">:</code> 切换到底线命令模式，以在最底一行输入命令。
+若想要编辑文本：启动Vim，进入了命令模式，按下<code class="language-plaintext highlighter-rouge">i</code>，切换到输入模式。</li>
+</ul>
+
+<p>命令模式只有一些最基本的命令，因此仍要依靠底线命令模式输入更多命令。</p>
+
+<h3 id="输入模式"><strong>输入模式</strong></h3>
+<p>在命令模式下按下i就进入了输入模式。</p>
+
+<p>在输入模式中，可以使用以下按键：</p>
+
+<ul>
+  <li><strong>字符按键以及Shift组合</strong>，输入字符</li>
+  <li><strong>ENTER</strong>，回车键，换行</li>
+  <li><strong>BACK SPACE</strong>，退格键，删除光标前一个字符</li>
+  <li><strong>DEL</strong>，删除键，删除光标后一个字符</li>
+  <li><strong>方向键</strong>，在文本中移动光标</li>
+  <li><strong>HOME/END</strong>，移动光标到行首/行尾</li>
+  <li><strong>Page Up/Page Down</strong>，上/下翻页</li>
+  <li><strong>Insert</strong>，切换光标为输入/替换模式，光标将变成竖线/下划线</li>
+  <li><strong>ESC</strong>，退出输入模式，切换到命令模式</li>
+</ul>
+
+<h3 id="底线命令模式"><strong>底线命令模式</strong></h3>
+<p>在命令模式下按下:（英文冒号）就进入了底线命令模式。</p>
+
+<p>底线命令模式可以输入单个或多个字符的命令，可用的命令非常多。</p>
+
+<p>在底线命令模式中，基本的命令有（已经省略了冒号）：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">:q</code> 退出程序</li>
+  <li><code class="language-plaintext highlighter-rouge">:w</code> 保存文件</li>
+  <li><code class="language-plaintext highlighter-rouge">:wq</code> 保存并退出</li>
+</ul>
+
+<p>按<kbd>ESC</kbd>键可随时退出底线命令模式。</p>
+
+<p><strong>移动光标</strong></p>
+
+<p>下面操作均需处在一般模式（默认的模式）下：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">h</code>,<code class="language-plaintext highlighter-rouge">j</code>,<code class="language-plaintext highlighter-rouge">k</code>,<code class="language-plaintext highlighter-rouge">l</code>分别为“左”“下”“上”“右”</li>
+  <li>翻半页：<code class="language-plaintext highlighter-rouge">Ctrl + d</code>(<code class="language-plaintext highlighter-rouge">d</code> for down)，<code class="language-plaintext highlighter-rouge">Ctrl + u</code>(u for up)。</li>
+  <li>翻一页：<code class="language-plaintext highlighter-rouge">Ctrl + f</code>(<code class="language-plaintext highlighter-rouge">f</code> for front)，<code class="language-plaintext highlighter-rouge">Ctrl + b</code>(b for back)。</li>
+  <li><code class="language-plaintext highlighter-rouge">gg</code>表示移到到首行。</li>
+  <li><code class="language-plaintext highlighter-rouge">G</code>表示移动到尾行。</li>
+  <li><code class="language-plaintext highlighter-rouge">nG</code>(<code class="language-plaintext highlighter-rouge">n</code>指的是数字)表示移动到第<code class="language-plaintext highlighter-rouge">n</code>行；一般用于根据程序错误提示信息进行 bug fix。</li>
+  <li><code class="language-plaintext highlighter-rouge">0</code>表示移到光标所在行的行首； <code class="language-plaintext highlighter-rouge">$</code>表示移动到光标所在行的行尾。</li>
+</ul>
+
+<p><strong>复制剪切粘贴</strong></p>
+
+<ul>
+  <li>按<code class="language-plaintext highlighter-rouge">yy</code>复制光标所在行。</li>
+  <li>按<code class="language-plaintext highlighter-rouge">dd</code>剪切光标所在行，如果光剪切不粘贴，那就相当于删除。</li>
+  <li>按<code class="language-plaintext highlighter-rouge">p</code>将复制/剪切的内容粘贴至光标后，因为光标是在具体字符的位置上，所以实际是在该字符的后面；整行的复制粘贴在游标的下一行。</li>
+</ul>
+
+<p><strong>撤销重做</strong></p>
+
+<ul>
+  <li>按<code class="language-plaintext highlighter-rouge">u</code>进行撤销，可多次撤销。</li>
+  <li>按<code class="language-plaintext highlighter-rouge">Ctrl + r</code>(<code class="language-plaintext highlighter-rouge">r</code> for redo)进行重做，可多次重做。</li>
+</ul>
+
+<p><strong>查找和替换字符串</strong></p>
+
+<p>下面所有操作均需在一般模式下执行：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/word</code>，向下查找一个字符串word，查找后按<code class="language-plaintext highlighter-rouge">n</code>看下一匹配结果，按<code class="language-plaintext highlighter-rouge">N</code>看上一匹配结果。</li>
+  <li><code class="language-plaintext highlighter-rouge">?word</code>，向上查找一个字符串word，查找后按<code class="language-plaintext highlighter-rouge">n</code>看下一匹配结果，按<code class="language-plaintext highlighter-rouge">N</code>看上一匹配结果。</li>
+  <li><code class="language-plaintext highlighter-rouge">:n1,n2s/word1/word2/g</code>，在<code class="language-plaintext highlighter-rouge">n1</code>和<code class="language-plaintext highlighter-rouge">n2</code>行之间查找word1并替换为word2，其中<code class="language-plaintext highlighter-rouge">n1</code>、<code class="language-plaintext highlighter-rouge">n2</code>皆可取数字，另外<code class="language-plaintext highlighter-rouge">n2</code>可取<code class="language-plaintext highlighter-rouge">$</code>表示最后一行。</li>
+</ul>
+
+<p><strong>行号相关</strong></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">:set nu</code>表示显示行号。</li>
+  <li><code class="language-plaintext highlighter-rouge">:set nonu</code>表示不显示行号。</li>
+</ul>
+
+<hr />
+<h2 id="软件包的管理"><strong>软件包的管理</strong></h2>
+<h3 id="yum工具"><strong><code class="language-plaintext highlighter-rouge">yum</code>工具</strong></h3>
+<p>yum（ Yellow dog Updater, Modified）是一个在 Fedora 和 RedHat 以及 SUSE 中的 Shell 前端软件包管理器。</p>
+
+<p>基于 RPM 包管理，能够从指定的服务器自动下载 RPM 包并且安装，可以自动处理依赖性关系，并且一次安装所有依赖的软件包，无须繁琐地一次次下载、安装。</p>
+
+<p>yum 提供了查找、安装、删除某一个、一组甚至全部软件包的命令，而且命令简洁而又好记。</p>
+
+<p>语法：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>yum [options] [command] [package ...]
+</code></pre></div></div>
+<ul>
+  <li>options：可选，选项包括-h（帮助），-y（当安装过程提示选择全部为 “yes”），-q（不显示安装的过程）等等。</li>
+  <li>command：要进行的操作。</li>
+  <li>package：安装的包名。</li>
+</ul>
+
+<p>常用命令：</p>
+<ol>
+  <li>列出所有可更新的软件清单命令：<code class="language-plaintext highlighter-rouge">yum check-update</code></li>
+  <li>列出所有已安装的软件包：<code class="language-plaintext highlighter-rouge">yum list installed</code></li>
+  <li>搜索软件包：<code class="language-plaintext highlighter-rouge">yum search &lt;package_name&gt;</code></li>
+  <li>更新所有软件命令：<code class="language-plaintext highlighter-rouge">yum update</code></li>
+  <li>仅安装指定的软件命令：<code class="language-plaintext highlighter-rouge">yum install &lt;package_name&gt;</code></li>
+  <li>仅更新指定的软件命令：<code class="language-plaintext highlighter-rouge">yum update &lt;package_name&gt;</code></li>
+  <li>列出所有可安裝的软件清单命令：<code class="language-plaintext highlighter-rouge">yum list</code></li>
+  <li>删除软件包命令：<code class="language-plaintext highlighter-rouge">yum remove &lt;package_name&gt;</code></li>
+  <li>查找软件包命令：<code class="language-plaintext highlighter-rouge">yum search &lt;keyword&gt;</code></li>
+  <li>清除缓存命令:
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">yum clean packages</code>: 清除缓存目录下的软件包</li>
+      <li><code class="language-plaintext highlighter-rouge">yum clean headers</code>: 清除缓存目录下的 headers</li>
+      <li><code class="language-plaintext highlighter-rouge">yum clean oldheaders</code>: 清除缓存目录下旧的 headers</li>
+      <li><code class="language-plaintext highlighter-rouge">yum clean, yum clean all (= yum clean packages; yum clean oldheaders)</code> :清除缓存目录下`的软件包及旧的 headers</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="安装源码包"><strong>安装源码包</strong></h3>
+<p>安装源码包有3个主要步骤，分别是./configure、make、make install。</p>
+
+<p><strong>下载源码包</strong></p>
+
+<p>Linux系统中的wget是一个下载文件的工具，它用在命令行下。<code class="language-plaintext highlighter-rouge">wget</code>支持<code class="language-plaintext highlighter-rouge">HTTP</code>，<code class="language-plaintext highlighter-rouge">HTTPS</code>和<code class="language-plaintext highlighter-rouge">FTP</code>协议，可以使用<code class="language-plaintext highlighter-rouge">HTTP</code>代理。所谓的自动下载是指，<code class="language-plaintext highlighter-rouge">wget</code>可以在用户退出系统的之后在后台执行。这意味这你可以登录系统，启动一个<code class="language-plaintext highlighter-rouge">wget</code>下载任务，然后退出系统，<code class="language-plaintext highlighter-rouge">wget</code>将在后台执行直到任务完成，相对于其它大部分浏览器在下载大量数据时需要用户一直的参与，这省去了极大的麻烦。</p>
+
+<ol>
+  <li>下载单个文件
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> wget http://demo.com/demo.zip 
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>下载多个文件 <br />
+将下载链接首先写在一个文本中，然后用wget -i url.txt来下载多个文件。假设我们有3个文件需要下载，这三个文件对应着三个链接，那么我们把这三个链接放在一个txt文件中。</p>
+
+    <p>url.txt:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> http://demo.com/demo1.zip
+ https://demo.com/demo2.zip
+ http://demo.com/demo3.zip
+</code></pre></div>    </div>
+
+    <p>那么我们在终端中运行:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> wget -i url.txt
+</code></pre></div>    </div>
+  </li>
+  <li>
+    <p>从FTP服务器上下载文件</p>
+
+    <p>从FTP服务器上下载文件时一般需要输入用户名和密码:</p>
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>wget --ftp-user username --ftp-password xxxx ftp://demo.com/demo.zip
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p><strong><code class="language-plaintext highlighter-rouge">./configure</code></strong></p>
+
+<p>这一步骤的主要作用就在于：</p>
+
+<ul>
+  <li>定制软件安装的功能/配置；</li>
+  <li>检查系统环境以及是否具有编译该源码包所需要的库；</li>
+  <li>生成 Makefile 文件；
+关于软件可定制的功能/配置，我们可以通过命令<code class="language-plaintext highlighter-rouge">./configure --help</code>来进行查看，此时实际上并不会真的执行<code class="language-plaintext highlighter-rouge">./configure</code>，而是显示一个帮助文档。</li>
+</ul>
+
+<p>最常用的可配置项莫过于<code class="language-plaintext highlighter-rouge">--prefix</code>，该配置项的意思是定义软件包的安装路径。</p>
+
+<p>在确定好所有配置项后，我们可以执行形如以下的命令：<code class="language-plaintext highlighter-rouge">./configure --prefix=/usr/local/appache2</code>，此时就开始检测安装环境了，如果有问题，按照提示信息操作（如安装缺失了的库/包）即可。</p>
+
+<p>如果执行成功，则可看到已生成了<code class="language-plaintext highlighter-rouge">Makefile</code>；另外也可以执行<code class="language-plaintext highlighter-rouge">echo $?</code>来验证操作结果，如果结果是0说明执行成功，否则就没有成功。</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">make</code></strong></p>
+
+<p>生成<code class="language-plaintext highlighter-rouge">Makefile</code>后，需要进行编译，执行命令<code class="language-plaintext highlighter-rouge">make</code>，执行后，同样可用<code class="language-plaintext highlighter-rouge">echo $?</code>来验证操作结果。</p>
+
+<p><strong><code class="language-plaintext highlighter-rouge">install</code></strong></p>
+
+<p>通过<code class="language-plaintext highlighter-rouge">make</code>成功编译后，我们就可以执行安装了，命令为<code class="language-plaintext highlighter-rouge">make install</code>，执行后，同样可用<code class="language-plaintext highlighter-rouge">echo $?</code>来验证操作结果。</p>
+
+<p>到此，该源码包便已安装完成了</p>
+
+<hr />
+<h2 id="系统状态监控"><strong>系统状态监控</strong></h2>
+<h3 id="当前系统打开文件"><strong>当前系统打开文件</strong></h3>
+
+<p><code class="language-plaintext highlighter-rouge">lsof</code>（<strong>list open files</strong>）是一个列出当前系统打开文件的工具。在linux环境下，任何事物都以文件的形式存在，通过文件不仅仅可以访问常规数据，还可以访问网络连接和硬件。所以如传输控制协议 (TCP) 和用户数据报协议 (UDP) 套接字等，系统在后台都为该应用程序分配了一个文件描述符，无论这个文件的本质如何，该文件描述符为应用程序与基础操作系统之间的交互提供了通用接口。因为应用程序打开文件的描述符列表提供了大量关于这个应用程序本身的信息，因此通过<code class="language-plaintext highlighter-rouge">lsof</code>工具能够查看这个列表对系统监测以及排错将是很有帮助的。</p>
+
+<p><strong>查看22端口占用情况</strong></p>
+
+<p>使用命令<code class="language-plaintext highlighter-rouge">sudo lsof -i TCP:22</code></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+sshd    1115  root    5u  IPv6  29937      0t0  TCP *:ssh (LISTEN)
+sshd    1115  root    7u  IPv4  29939      0t0  TCP *:ssh (LISTEN)
+sshd    4890  root    5u  IPv4  61606      0t0  TCP centos:ssh-&gt;192.168.0.106:58988 (ESTABLISHED)
+sshd    4907 sanlo    5u  IPv4  61606      0t0  TCP centos:ssh-&gt;192.168.0.106:58988 (ESTABLISHED)
+sshd    6325  root    5u  IPv4  69237      0t0  TCP centos:ssh-&gt;192.168.0.106:53377 (ESTABLISHED)
+sshd    6329 sanlo    5u  IPv4  69237      0t0  TCP centos:ssh-&gt;192.168.0.106:53377 (ESTABLISHED)
+</code></pre></div></div>
+<h3 id="如何查看系统变量"><strong>如何查看系统变量</strong></h3>
+<ul>
+  <li>执行env可以查看系统的环境变量，如主机的名称、当前用户的SHELL类型、当前用户的家目录、当前系统所使用的语言等。</li>
+  <li>执行set可以看到系统当前所有的变量，其中包括了：
+    <ul>
+      <li>系统的所有预设变量，这其中既包括了env所显示的环境变量，也包含了其它许多预设变量。</li>
+      <li>用户自定义的变量。</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="监控系统的状态"><strong>监控系统的状态</strong></h3>
+
+<p><strong>使用<code class="language-plaintext highlighter-rouge">w</code>命令查看当前系统整体上的负载</strong></p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># w
+ 20:33:11 up 309 days, 10:03,  1 user,  load average: 0.00, 0.01, 0.05
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+root     pts/0    113.102.224.86   20:33    3.00s  0.00s  0.00s w
+</code></pre></div></div>
+<p>需要关注的是第一行的最后一个部分——<code class="language-plaintext highlighter-rouge">load average</code>，这里的3个数字分别表示了系统在1分钟/5分钟/15分钟内的平均负载值，值越大说明服务器压力就越大。</p>
+
+<p>那么，如何看负载是不是太满了呢？其实这个值是与服务器的物理CPU做对比的，那么只要负载值不超过物理CPU数量即可；如当前服务器有两个CPU，那么就尽量不要让负载值超过2。</p>
+
+<h3 id="用vmstat命令查看系统具体负载"><strong>用<code class="language-plaintext highlighter-rouge">vmstat</code>命令查看系统具体负载</strong></h3>
+<p><code class="language-plaintext highlighter-rouge">vmstat</code>命令打印的结果共分为6部分：<code class="language-plaintext highlighter-rouge">procs</code>、<code class="language-plaintext highlighter-rouge">memory</code>、<code class="language-plaintext highlighter-rouge">swap</code>、<code class="language-plaintext highlighter-rouge">io</code>、<code class="language-plaintext highlighter-rouge">system</code>和<code class="language-plaintext highlighter-rouge">cpu</code>，其中又有许多的细分字段，这里我们重点关注<code class="language-plaintext highlighter-rouge">r</code>、<code class="language-plaintext highlighter-rouge">b</code>、<code class="language-plaintext highlighter-rouge">si</code>、<code class="language-plaintext highlighter-rouge">so</code>、<code class="language-plaintext highlighter-rouge">bi</code>、<code class="language-plaintext highlighter-rouge">bo</code>、<code class="language-plaintext highlighter-rouge">wa</code>字段。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># vmstat 1 5
+procs -----------memory---------- ---swap-- -----io---- -system-- ------cpu-----
+ r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+ 0  0      0 707116  15392 177284    0    0    81     5  110  267  0  0 99  1  0
+ 0  0      0 707100  15392 177284    0    0     0     0  121  274  1  0 99  0  0
+ 0  0      0 706712  15392 177284    0    0     0     0  107  254  0  1 99  0  0
+ 0  0      0 706696  15392 177284    0    0     0    40   94  235  0  0 100  0  0
+ 0  0      0 706712  15392 177284    0    0     0     0   93  231  0  0 100  0  0
+</code></pre></div></div>
+<ul>
+  <li>r(run)：表示正在运行或等待CPU时间片的进程数，<strong>该数值如果长期大于服务器CPU的个数，则说明CPU资源不够用了</strong>。</li>
+  <li>b(block)：表示等待资源(I/O、内存等)的进程数。举个例子，当磁盘读写非常频繁时，写数据就会非常慢，此时CPU运算很快就结束了，但进程需要把计算的结果写入磁盘，这样进程的任务才算完成，因此这个任务只能慢慢等待磁盘了。<strong>该数值如果长时间大于1，则需要查一下具体是缺的哪项资源</strong>。</li>
+  <li>si和so：分别表示由交换区写入内存的数据量以及由内存写入交换区的数据量；<strong>一般情况下，si、so的值都为0，如果si、so的值长期不为0，则表示系统内存不足</strong>，需要借用磁盘上的交换区，由于这往往对系统性能影响极大，因此需要考虑是否增加系统内存。</li>
+  <li>bi和bo：分别表示从块设备读取数据的量和往块设备写入数据的量；如果这两个值很高，那么表示磁盘I/O压力很大。</li>
+  <li>wa：表示I/O等待所占用CPU的时间百分比。<strong>wa值越高，说明I/O等待越严重。如果wa值超过20%，说明I/O等待严重</strong>。
+另外，<code class="language-plaintext highlighter-rouge">vmstat</code>命令后可带两个数字，第一个数字表示每多少秒打印一次结果，第二个数字表示总共打印多少次结果；如果只有第一个数字，则会不停地打印结果，直到你终止该命令。</li>
+</ul>
+
+<h3 id="用top命令显示进程所占的系统资源"><strong>用top命令显示进程所占的系统资源</strong></h3>
+<p><code class="language-plaintext highlighter-rouge">top</code>命令的结果有很多信息，但我们主要用它来监控进程所占的系统资源。<code class="language-plaintext highlighter-rouge">top</code>命令的结果每隔3秒变1次，它的特点是把占用系统资源（CPU、内存、磁盘I/O等）最高的进程放到最前面。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  PID USER      PR  NI    VIRT    RES    SHR S %CPU %MEM     TIME+ COMMAND
+    1 root      20   0   41060   3576   2396 S  0.0  0.4   0:00.89 systemd
+    2 root      20   0       0      0      0 S  0.0  0.0   0:00.00 kthreadd
+    3 root      20   0       0      0      0 S  0.0  0.0   0:00.00 ksoftirqd/0
+</code></pre></div></div>
+<p>这里面我们主要关注RES（所占内存大小）、%CPU、%MEM（占用内存的百分比）、COMMAND这4个字段。</p>
+
+<p>另外，如果需要一次性打印系统资源的使用情况，可以使用<code class="language-plaintext highlighter-rouge">top - bn1</code>。</p>
+
+<h3 id="监控网卡流量"><strong>监控网卡流量</strong></h3>
+<p><strong>使用sar命令查看网卡流量历史记录</strong></p>
+
+<p>使用<code class="language-plaintext highlighter-rouge">sar</code>命令前可能需要先进行安装：<code class="language-plaintext highlighter-rouge">yum install -y sysstat</code>。</p>
+
+<p>使用方法是：<code class="language-plaintext highlighter-rouge">sar -n DEV</code>，第一次使用时会报错，因为还没有生成相应的数据记录。打印出来的结果里有很多字段，我们关注<code class="language-plaintext highlighter-rouge">rxpck/s</code>和<code class="language-plaintext highlighter-rouge">rxkB/s</code>。</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">rxpck/s</code>表示网卡每秒收取的包的数量，如果数值大于4000则考虑是被攻击了。</li>
+  <li><code class="language-plaintext highlighter-rouge">rxkB/s</code>表示网卡每秒收取的数据量（单位为KB）。</li>
+</ul>
+
+<p><strong>使用nload命令监控网卡实时流量</strong></p>
+
+<p>使用nload前需进行安装：<code class="language-plaintext highlighter-rouge">yum install -y epel-release;yum install -y nload</code>。</p>
+
+<p>使用起来也很简单，直接使用<code class="language-plaintext highlighter-rouge">nload</code>命令则可动态显示当前的网卡流入/流出的流量。</p>
+
+<h3 id="使用free命令查看内存使用状况"><strong>使用free命令查看内存使用状况</strong></h3>
+<p>为了检查内存是否够用，除了<code class="language-plaintext highlighter-rouge">vmstat</code>外，我们还可以使用更直接有效的<code class="language-plaintext highlighter-rouge">fre</code>e命令：<code class="language-plaintext highlighter-rouge">free -h</code>。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># free -h
+              total        used        free      shared  buff/cache   available
+Mem:           992M        141M        462M        516K        388M        714M
+Swap:          1.0G          0B        1.0G
+</code></pre></div></div>
+<ul>
+  <li>total：内存总量，相当于used+free+buff/cache=used+available。</li>
+  <li>used：已真正使用的内存量。</li>
+  <li>free：剩余（未被分配）的内存量。</li>
+  <li>shared：不关注。</li>
+  <li>buff/cache：缓解CPU和I/O速度差距所用的内存缓存区，由系统预留出来备用，但如果剩余内存都不够用了，那么这部分也是可以挪用出来供服务来使用的。</li>
+  <li>available：可用内存，相当于free+buff/cache。</li>
+</ul>
+
+<h3 id="使用ps命令查看系统进程"><strong>使用ps命令查看系统进程</strong></h3>
+<p>与<code class="language-plaintext highlighter-rouge">top</code>命令类似，<code class="language-plaintext highlighter-rouge">ps</code>命令也是用来查看系统具体进程占用资源的情况；由于<code class="language-plaintext highlighter-rouge">top</code>命令本身是动态的，而<code class="language-plaintext highlighter-rouge">ps</code>命令是非动态的（相当于执行命令时的一个快照），因此<code class="language-plaintext highlighter-rouge">ps</code>命令的功能实际上更接近于<code class="language-plaintext highlighter-rouge">top -bn1</code>。</p>
+
+<h3 id="使用netstat命令查看网络情况"><strong>使用netstat命令查看网络情况</strong></h3>
+<p><code class="language-plaintext highlighter-rouge">netstat</code>的功能非常强大，这里举两个实际使用场景：<code class="language-plaintext highlighter-rouge">netstat -lnp</code>（打印当前系统启动哪些端口）和<code class="language-plaintext highlighter-rouge">netstat -an</code>（打印网络连接状况）。</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code># netstat -an
+Proto Recv-Q Send-Q Local Address           Foreign Address         State  
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN     
+tcp        0      0 172.18.63.215:36492     140.205.140.205:80      ESTABLISHED
+netstat -lnp
+Active Internet connections (only servers)
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name    
+tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      1604/mysqld         
+tcp        0      0 0.0.0.0:80              0.0.0.0:*               LISTEN      1636/httpd          
+tcp        0      0 0.0.0.0:21              0.0.0.0:*               LISTEN      1639/vsftpd         
+tcp        0      0 0.0.0.0:22              0.0.0.0:*               LISTEN      674/sshd            
+tcp        0      0 0.0.0.0:443             0.0.0.0:*               LISTEN      1636/httpd
+</code></pre></div></div>
+
+<hr />
+<h2 id="ssh安全登录"><strong>SSH安全登录</strong></h2>
+
+<p>Linux系统通过sshd(ssh daemon)服务实现远程登录的功能，其默认端口是<strong>22</strong>，此服务为Linux系统预装，并预设开机自启，因此不需要额外设置便能够实现Linux远程登录。</p>
+
+<p><strong>Linux系统上的ssh客户端——openssh</strong></p>
+
+<p>Windosw系统上有许多软件可以实现ssh远程登录，比如说<strong>putty</strong>、<strong>SecureCRT</strong>、<strong>Xshell</strong>等，那么，我们在Linux系统上，应该使用哪个ssh客户端呢？这里推荐使用<strong>openssh-clients</strong>(简称<strong>openssh</strong>)。</p>
+
+<p><strong>ssh的校验登录方式</strong></p>
+
+<p>ssh支持两种方法进行远程校验登录：使用密码登录和使用密钥登录。</p>
+
+<h3 id="使用密码登录"><strong>使用密码登录</strong></h3>
+<p>使用命令<code class="language-plaintext highlighter-rouge">ssh user@host</code>，如<code class="language-plaintext highlighter-rouge">ssh root@192.168.80.128</code>，系统会进一步提示输入密码，正确输入后，你已经成功登录到远程服务器上了，你的一切操作都跟本地操作无异。</p>
+
+<h3 id="使用密钥认证登录"><strong>使用密钥认证登录</strong></h3>
+<p>由于密码登录存在易泄露、易破解的问题，因此一般主张使用ssh远程登录时，仅使用密钥进行登录，并关闭密码远程登录的权限。</p>
+
+<p>所谓密钥认证，实际上是使用了一对加密的字符串：公钥(<strong>public key</strong>)和私钥(<strong>private key</strong>)，其一般使用RSA算法生成。公钥用于加密，任何人都可以看到其内容；而私钥用于解密，只有拥有者才能看到其内容；那么显而易见，即使坏人拿到公钥，也无法解读加密后的内容，因此可以保证内容的保密性。</p>
+
+<p>下面介绍具体的操作：</p>
+
+<ol>
+  <li>为本地本用户账号生成一个密钥对：<code class="language-plaintext highlighter-rouge">ssh-keygen</code>，系统会进一步提示你输入密钥存放的目标目录，按回车键保持默认即可（默认为<code class="language-plaintext highlighter-rouge">~/.ssh</code>）；接下来会提示你输入密钥的密码，一般留空即可（直接按回车键）；此时会告知你密钥对已成功生成。</li>
+  <li>查看刚生成的公钥内容：<code class="language-plaintext highlighter-rouge">cat ~/.ssh/id_rsa.pub</code>。</li>
+  <li>方法有两个：
+    <ul>
+      <li>使用命令<code class="language-plaintext highlighter-rouge">ssh-copy-id user@host</code>即可把本地的公钥复制到远程服务器的<code class="language-plaintext highlighter-rouge">authorized_keys</code>文件上，并给相应的目录和文件设置好合适的权限，详情请看这里SSH-COPY-ID。</li>
+      <li>复制公钥的全部内容，粘贴到远程服务器的<code class="language-plaintext highlighter-rouge">~/.ssh/authorized_keys</code>里。远程服务器上如果不存在这个<code class="language-plaintext highlighter-rouge">authorized_keys</code>文件，则直接新建一个；如果已存在，则注意需要另起一行，加到此文件末尾。这一个过程也可使用以下命令进行操作：<code class="language-plaintext highlighter-rouge">$ ssh user@host 'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys' &lt; ~/.ssh/id_rsa.pub</code>。需要注意，使用此手动方法，需要相应的设置好<code class="language-plaintext highlighter-rouge">authorized_keys</code>文件的权限，推荐为<code class="language-plaintext highlighter-rouge">600</code>。</li>
+    </ul>
+  </li>
+  <li>大功告成，从此你使用ssh远程登录，就不需要再输入密码了。
+使用ssh远程执行命令并获得执行结果</li>
+</ol>
+
+<p><strong>例子1：复制公钥</strong></p>
+
+<p>上述的<code class="language-plaintext highlighter-rouge">$ ssh user@host 'mkdir -p .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys' &lt; ~/.ssh/id_rsa.pub</code>就是一个很好的例子：</p>
+
+<ol>
+  <li><code class="language-plaintext highlighter-rouge">ssh user@host</code>，表示登录远程主机；</li>
+  <li>单引号中的<code class="language-plaintext highlighter-rouge">mkdir .ssh &amp;&amp; cat &gt;&gt; .ssh/authorized_keys</code>，表示登录后在远程shell上执行的命令；</li>
+  <li><code class="language-plaintext highlighter-rouge">mkdir -p .ssh</code>的作用是：如果用户主目录中的<code class="language-plaintext highlighter-rouge">.ssh</code>目录不存在，就创建一个；</li>
+  <li><code class="language-plaintext highlighter-rouge">cat &gt;&gt; .ssh/authorized_keys' &lt; ~/.ssh/id_rsa.pub</code>的作用是：将本地的公钥文件<code class="language-plaintext highlighter-rouge">~/.ssh/id_rsa.pub</code>，重定向追加到远程文件<code class="language-plaintext highlighter-rouge">authorized_keys</code>的末尾。</li>
+</ol>
+
+<p><strong>例子2：查看远程主机是否运行进程httpd</strong></p>
+
+<p><code class="language-plaintext highlighter-rouge">$ ssh user@host 'ps ax | grep [h]ttpd'</code></p>
+
+<p><strong>退出当前ssh会话</strong></p>
+
+<p>使用<code class="language-plaintext highlighter-rouge">exit</code>命令或<code class="language-plaintext highlighter-rouge">logout</code>命令即可。</p>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+            
+            
+        
+            
+            
+                
+                    
+                
+            
+                
+                    
+                
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+        <p><strong>上一篇</strong> <a href="/2017/07/29/Raspberry-Pi-install-and-config/">Raspberry Pi 安装与配置</a></p>
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2022/04/23/Shanghai-is-a-great-river/">上海是预示未来一百年的大河</a></p>
+        
+    </div>
+</div>
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <!-- <li><a href="#similar_posts">Similar Posts123</a></li>
+                    <li><a href="#comments">Comments</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+
+
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="description"> 如果你感受到痛苦，那么，你还活着；如果你感受到他人的痛苦，那么，你才是人。 </p>
+    <p class="contact">
+      Contact me at: 
+      <a href="https://github.com/sanlo" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   <a href="mailto:940072028@qq.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>  
+      <a href="https://www.linkedin.com/in/sanlozhang" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a> 
+    </p>
+    <p class="power">
+      <span> Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>. </span>
+    </p>
+  </div>
+</footer>
+
+    <div class="back-to-top">
+    <a href="#top" class="scroll">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/scroll.min.js " charset="utf-8"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+
+</html>

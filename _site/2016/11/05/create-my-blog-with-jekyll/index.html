@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta use_mermaid="true" />
+  <title>Jekyll 搭建静态博客</title>
+  <meta name="description" content="在github上用jekyll搭建博客。" />
+
+  <link rel="shortcut icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="icon" href="/favicon.ico?" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/fontawesome/css/font-awesome.min.css "> <link rel="stylesheet" href="/css/main.css ">
+  <link rel="canonical" href="http://sanlo.github.io/2016/11/05/create-my-blog-with-jekyll/" />
+  <link rel="alternate" type="application/rss+xml" title="Sanlo Zhang" href="http://sanlo.github.io/feed.xml ">
+</head>
+
+
+  <body>
+
+    <header id="top">
+    <div class="wrapper">
+        <a href="/" class="brand">Sanlo Zhang</a>
+        <small></small>
+        <button id="headerMenu" class="menu"><i class="fa fa-bars"></i></button>
+        <nav id="headerNav">
+            <ul>
+                <li>
+                    
+                        <a href="/">
+                    
+                    <i class="fa fa-home"></i>Home
+                    </a>
+                </li>
+
+                
+                    
+                    <li>
+                        
+                            <a href="/archive/">
+                        
+                            <i class="fa fa-archive"></i>Archives
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/category/">
+                        
+                            <i class="fa fa-th-list"></i>Categories
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/tag/">
+                        
+                            <i class="fa fa-tags"></i>Tags
+                        </a>
+                    </li>
+                    
+                
+                    
+                    <li>
+                        
+                            <a href="/about/">
+                        
+                            <i class="fa fa-heart"></i>About
+                        </a>
+                    </li>
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </nav>
+    </div>
+</header>
+
+
+        <div class="page clearfix" post>
+    <div class="left">
+        <h1>Jekyll 搭建静态博客</h1>
+        <div class="label">
+
+            <div class="label-card">
+                <i class="fa fa-calendar"></i>2016-11-05
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+            </div>
+
+            <div class="label-card">
+                
+
+
+<!-- <span class="point">•</span> -->
+<span class="categories">
+  <i class="fa fa-th-list"></i>
+  
+    
+        <a href="/category/#jekyll" title="Category: jekyll" rel="category">jekyll</a>
+    
+  
+
+  <!-- <span class="point">•</span> -->
+</span>
+
+
+            </div>
+
+            <div class="label-card">
+                
+<!-- <span class="point">•</span> -->
+<span class="pageTag">
+  <i class="fa fa-tags"></i>
+  
+    
+        <!--a href="/tag/#jekyll" title="Tag: jekyll" rel="tag">jekyll</a-->
+        <a href="/tag/#jekyll" title="Tag: jekyll" rel="tag">jekyll</a>&nbsp;
+    
+        <!--a href="/tag/#RubyGems" title="Tag: RubyGems" rel="tag">RubyGems</a-->
+        <a href="/tag/#RubyGems" title="Tag: RubyGems" rel="tag">RubyGems</a>
+    
+  
+
+</span>
+
+            </div>
+
+        </div>
+        <hr>
+        <article itemscope itemtype="http://schema.org/BlogPosting">
+            <ul id="markdown-toc">
+  <li><a href="#搭建过程" id="markdown-toc-搭建过程">搭建过程</a>    <ul>
+      <li><a href="#安装ruby" id="markdown-toc-安装ruby">安装Ruby</a></li>
+      <li><a href="#安装rubygems" id="markdown-toc-安装rubygems">安装RubyGems</a></li>
+      <li><a href="#用rubygems安装jekyll" id="markdown-toc-用rubygems安装jekyll">用RubyGems安装Jekyll</a></li>
+      <li><a href="#本地创建博客" id="markdown-toc-本地创建博客">本地创建博客</a>        <ul>
+          <li><a href="#创建博客项目" id="markdown-toc-创建博客项目">创建博客项目</a></li>
+          <li><a href="#添加markdown文档" id="markdown-toc-添加markdown文档">添加MarkDown文档</a></li>
+          <li><a href="#部署代码到github" id="markdown-toc-部署代码到github">部署代码到GitHub</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>在github上用jekyll搭建博客。</p>
+
+<h2 id="搭建过程">搭建过程</h2>
+
+<p>在jekyll的官网上 <a href="http://jekyllrb.com/">http://jekyllrb.com/</a> 其实已经说得比较明白了，我在这里还是简单的说一下吧。我用的是Windows系统。
+主要环节有：安装Ruby，安装RubyGems，安装jekyll，安装代码高亮插件，安装node.js</p>
+
+<h3 id="安装ruby">安装Ruby</h3>
+
+<p>ruby官网下载安装：<a href="https://www.ruby-lang.org/en/downloads/">https://www.ruby-lang.org/en/downloads/</a></p>
+
+<p>安装完成后配置环境变量</p>
+
+<p>在命令提示符中，得到ruby版本号，如下图，即安装成功</p>
+
+<p><a href="https://imgtu.com/i/4HHwIx"><img src="https://z3.ax1x.com/2021/10/02/4HHwIx.png" alt="4HHwIx.png" /></a></p>
+
+<h3 id="安装rubygems">安装RubyGems</h3>
+
+<p>官网下载 <a href="http://rubygems.org/pages/download">http://rubygems.org/pages/download</a> rubygems</p>
+
+<p>cd到RubyGems 安装目录，执行安装</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cd D:\下载\rubygems-3.3.12\rubygems-3.3.12	#切换文件目录
+ruby setup.rb       #安装rubygems
+ruby -v     #查看rubygems版本号
+</code></pre></div></div>
+
+<h3 id="用rubygems安装jekyll">用RubyGems安装Jekyll</h3>
+
+<p>以上两个步骤操作完成后，在 CMD 窗口执行如下命令安装Jekyll：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> gem install jekyll   #安装jekyll
+ jekyll -v    #查看jekyll版本号
+
+</code></pre></div></div>
+
+<p>至此jekyll就已经安装完毕了，后续就是个性化的自己设定了。</p>
+
+<h3 id="本地创建博客">本地创建博客</h3>
+
+<h4 id="创建博客项目">创建博客项目</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>jekyll new restlessManBlog   #新建博客
+cd restlessManBlog     #切换目录
+jekyll server      #启动项目
+</code></pre></div></div>
+<p>在浏览器访问当前项目：<code class="language-plaintext highlighter-rouge">http://localhost:4000/</code></p>
+
+<h4 id="添加markdown文档">添加MarkDown文档</h4>
+<p>在项目根目录下的<code class="language-plaintext highlighter-rouge">_posts</code>目录创建 markdown 文档。这里注意 md 文档命名要添加 “yyyy-mm-dd”的前缀。</p>
+
+<p>例如：<code class="language-plaintext highlighter-rouge">2019-10-11-my-new-blog.md</code></p>
+
+<p>查看MarkDown的 <a href="https://markdown.com.cn/basic-syntax/">基础语法</a>，可以获得MarkDown使用简介。</p>
+
+<h4 id="部署代码到github">部署代码到GitHub</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git add .   #git 命令添加所有文件
+git commit  #git 提交文件
+git push    #git 推送代码到远程
+
+</code></pre></div></div>
+
+        </article>
+        <hr>
+
+        
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+                
+                    
+                
+                    
+                
+            
+                
+                    
+                
+                    
+                
+            
+        
+            
+            
+        
+        
+
+        <div class="post-recent">
+    <div class="pre">
+        
+    </div>
+    <div class="nex">
+
+        
+        <p><strong>下一篇</strong> <a href="/2016/11/07/sublimeLinter/">代码校验工具 SublimeLinter 的安装与使用</a></p>
+        
+    </div>
+</div>
+
+
+
+
+    </div>
+    <button class="anchor"><i class="fa fa-anchor"></i></button>
+    <div class="right">
+        <div class="wrap">
+
+            <!-- Content -->
+            <div class="side content">
+                <div>
+                    Content
+                </div>
+                <ul id="content-side" class="content-ul">
+                    <!-- <li><a href="#similar_posts">Similar Posts123</a></li>
+                    <li><a href="#comments">Comments</a></li> -->
+                </ul>
+            </div>
+            <!-- 其他div框放到这里 -->
+            <!-- <div class="side">bbbb</div> -->
+        </div>
+    </div>
+</div>
+
+
+<script>
+/**
+ * target _blank
+ */
+(function() {
+    var aTags = document.querySelectorAll('article a:not([id])')
+    for (var i = 0; i < aTags.length; i++) {
+        aTags[i].setAttribute('target', '_blank')
+    }
+}());
+</script>
+<script src="/js/pageContent.js " charset="utf-8"></script>
+
+
+    <footer class="site-footer">
+  <div class="wrapper">
+    <p class="description"> 如果你感受到痛苦，那么，你还活着；如果你感受到他人的痛苦，那么，你才是人。 </p>
+    <p class="contact">
+      Contact me at: 
+      <a href="https://github.com/sanlo" title="GitHub"><i class="fa fa-github" aria-hidden="true"></i></a>   <a href="mailto:940072028@qq.com" title="email"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>  
+      <a href="https://www.linkedin.com/in/sanlozhang" title="LinkedIn"><i class="fa fa-linkedin" aria-hidden="true"></i></a> 
+    </p>
+    <p class="power">
+      <span> Site powered by <a href="https://jekyllrb.com/">Jekyll</a> & <a href="https://pages.github.com/">Github Pages</a>. </span>
+    </p>
+  </div>
+</footer>
+
+    <div class="back-to-top">
+    <a href="#top" class="scroll">
+        <i class="fa fa-arrow-up" aria-hidden="true"></i>
+    </a>
+</div>
+
+    <script src=" /js/main.js " charset="utf-8"></script>
+    <script src=" /js/scroll.min.js " charset="utf-8"></script>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@9/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </body>
+
+</html>
