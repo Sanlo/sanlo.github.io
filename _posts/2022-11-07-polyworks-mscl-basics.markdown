@@ -171,16 +171,16 @@ MSCL中提供了完善的操作数组的指令 ：
  
 |宏指令|描述|
 |---|---|
-|MACRO ARRAY ARE_EQUAL|将一个数组与另一个数组进行对比|
-|MACRO ARRAY ELEMENTS AT_INDEXES|返回包含位于指定索引处的元素的数组|
-|MACRO ARRAY ELEMENTS COUNT_OF|返回在数组中找到的元素的出现次数|
-|MACRO ARRAY ELEMENTS INDEXES_OF|返回数组的值等于给定元素的所有对应索引|
-|MACRO ARRAY ELEMENTS INDEX_OF|返回对应的数组值等于给定元素的最低索引|
-|MACRO ARRAY ELEMENTS INSERT AT_INDEX|将包含元素的给定数组插入到数组的给定索引处|
-|MACRO ARRAY ELEMENTS REMOVE AT_INDEXES|从数组的指定索引处删除元素|
-|MACRO ARRAY ELEMENTS SORT DOUBLE|使用指定的排序排列双精度数组|
-|MACRO ARRAY ELEMENTS SORT INTEGER|使用指定的排序排列整形数组|
-|MACRO ARRAY ELEMENTS SORT STRING|使用指定的排序排列字符串数组|
+|`MACRO ARRAY ARE_EQUAL`|将一个数组与另一个数组进行对比|
+|`MACRO ARRAY ELEMENTS AT_INDEXES`|返回包含位于指定索引处的元素的数组|
+|`MACRO ARRAY ELEMENTS COUNT_OF`|返回在数组中找到的元素的出现次数|
+|`MACRO ARRAY ELEMENTS INDEXES_OF`|返回数组的值等于给定元素的所有对应索引|
+|`MACRO ARRAY ELEMENTS INDEX_OF`|返回对应的数组值等于给定元素的最低索引|
+|`MACRO ARRAY ELEMENTS INSERT AT_INDEX`|将包含元素的给定数组插入到数组的给定索引处|
+|`MACRO ARRAY ELEMENTS REMOVE AT_INDEXES`|从数组的指定索引处删除元素|
+|`MACRO ARRAY ELEMENTS SORT DOUBLE`|使用指定的排序排列双精度数组|
+|`MACRO ARRAY ELEMENTS SORT INTEGER`|使用指定的排序排列整形数组|
+|`MACRO ARRAY ELEMENTS SORT STRING`|使用指定的排序排列字符串数组|
 
 ### **用户输入**
 
@@ -191,16 +191,16 @@ MSCL中提供了完善的操作数组的指令 ：
 
 |宏指令|描述|
 |---|---|
-|MACRO INPUT DOUBLE|输入双精度型参数对话框|
-|MACRO INPUT INTEGER|输入整型参数对话框|
-|MACRO INPUT STRING|输入字符串参数对话框|
-|MACRO INPUT PASSWORD|输入密码型参数对话框，用户键盘输入遮盖为`*` |
-|MACRO INPUT QUESTION|提示用户选择【是】或【否】的对话框|
-|MACRO INPUT FILE_PATH|提示用户选择文件路径|
-|MACRO INPUT FOLDER_PATH|提示用户选择文件夹路径|
-|MACRO INPUT PWK_OBJECTS|提示用户选择工作区对象|
-|MACRO INPUT MULTIPLE_PARAMETERS|使用多个参数创建的对话框|
-|MACRO PAUSE|输出信息对话框|
+|`MACRO INPUT DOUBLE`|输入双精度型参数对话框|
+|`MACRO INPUT INTEGER`|输入整型参数对话框|
+|`MACRO INPUT STRING`|输入字符串参数对话框|
+|`MACRO INPUT PASSWORD`|输入密码型参数对话框，用户键盘输入遮盖为`*` |
+|`MACRO INPUT QUESTION`|提示用户选择【是】或【否】的对话框|
+|`MACRO INPUT FILE_PATH`|提示用户选择文件路径|
+|`MACRO INPUT FOLDER_PATH`|提示用户选择文件夹路径|
+|`MACRO INPUT PWK_OBJECTS`|提示用户选择工作区对象|
+|`MACRO INPUT MULTIPLE_PARAMETERS`|使用多个参数创建的对话框|
+|`MACRO PAUSE`|输出信息对话框|
 
 #### **高级用户界面**
 
@@ -217,22 +217,41 @@ MSCL中提供了完善的操作数组的指令 ：
 
 |宏指令|描述|
 |---|---|
-|MACRO INPUT DIALOG_BOX CHECKBOX|将复选框添加到对话框|
-|MACRO INPUT DIALOG_BOX DEFINE|定义一个对话框|
-|MACRO INPUT DIALOG_BOX DROP_DOWN_LIST|将列表框添加到对话框。请注意，可创建单选和多选列表框|
-|MACRO INPUT DIALOG_BOX EDITBOX DOUBLE|将有效值为双精度值的文本框添加到对话框|
-|MACRO INPUT DIALOG_BOX EDITBOX INTEGER|将有效值为整数值的文本框添加到对话框|
-|MACRO INPUT DIALOG_BOX EDITBOX PASSWORD|将密码文本框添加到对话框|
-|MACRO INPUT DIALOG_BOX EDITBOX STRING|将有效值为字符串值的文本框添加到对话框|
-|MACRO INPUT DIALOG_BOX FILE_PATH|将文件路径文本框和浏览按钮添加到对话框。请注意，可创建单个文件路径和多个文件路径|
-|MACRO INPUT DIALOG_BOX FOLDER_PATH|将文件夹路径文本框和浏览按钮添加到对话框|
-|MACRO INPUT DIALOG_BOX LABEL|将标签添加到对话框|
-|MACRO INPUT DIALOG_BOX RADIO_GROUP|将一组选项按钮添加到对话框|
-|MACRO INPUT DIALOG_BOX SECTION|将区段添加到对话框。请注意，区段可展开或折叠|
-|MACRO INPUT DIALOG_BOX SHOW|向用户显示对话框|
+|`MACRO INPUT DIALOG_BOX CHECKBOX`|将复选框添加到对话框|
+|`MACRO INPUT DIALOG_BOX DEFINE`|定义一个对话框|
+|`MACRO INPUT DIALOG_BOX DROP_DOWN_LIST`|将列表框添加到对话框。请注意，可创建单选和多选列表框|
+|`MACRO INPUT DIALOG_BOX EDITBOX DOUBLE`|将有效值为双精度值的文本框添加到对话框|
+|`MACRO INPUT DIALOG_BOX EDITBOX INTEGER`|将有效值为整数值的文本框添加到对话框|
+|`MACRO INPUT DIALOG_BOX EDITBOX PASSWORD`|将密码文本框添加到对话框|
+|`MACRO INPUT DIALOG_BOX EDITBOX STRING`|将有效值为字符串值的文本框添加到对话框|
+|`MACRO INPUT DIALOG_BOX FILE_PATH`|将文件路径文本框和浏览按钮添加到对话框|
+|`MACRO INPUT DIALOG_BOX FOLDER_PATH`|将文件夹路径文本框和浏览按钮添加到对话框|
+|`MACRO INPUT DIALOG_BOX LABEL`|将标签添加到对话框|
+|`MACRO INPUT DIALOG_BOX RADIO_GROUP`|将一组选项按钮添加到对话框|
+|`MACRO INPUT DIALOG_BOX SECTION`|将区段添加到对话框。请注意，区段可展开或折叠|
+|`MACRO INPUT DIALOG_BOX SHOW`|向用户显示对话框|
 
 &emsp;&emsp;要使用这些命令，首先使用`MACRO INPUT DIALOG_BOX DEFINE`命令定义对话框并为其分配一个标题。然后，使用相应的`MACRO INPUT DIALOG_BOX`命令将所需参数添加到对话框。请注意，它们的显示顺序与输入顺序相同。
 
 ## **二.目录树对象操作**
+### **对象的选择**
+
+|宏指令|描述|
+|---|---|
+|`TREEVIEW OBJECT SELECT NONE`|取消目录树中所有对象的选择|
+|`TREEVIEW OBJECT SELECT`|选择或者取消选择指定对象|
+|`TREEVIEW OBJECT SELECT GET`|获得对象的选择状态|
+
+### **获取对象类型**
+&emsp;&emsp;使用`TREEVIEW OBJECT PROPERTIES TYPES GET`可以作为通用的对象类型查询指令，可以获得对象的类型（Reference，Feature，Comparison Point等），和主类型（Plane，Circle，Slot等）等信息。
+### **对象尺寸控制**
+&emsp;&emsp;获取和设置目录树中对象的尺寸和控制建议使用`TREEVIEW OBJECT PROPERTIES DIMENSION`系列的宏指令，不建议使用`MEASURE CONTROL MEASURED`和`MEASURE CONTROL NOMINAL`相关的宏指令，因为这两个宏指令只能设置和获取当前对象在**几何控制**里已经勾选过的尺寸控制。
+
+|宏指令|描述|
+|---|---|
+|`TREEVIEW OBJECT PROPERTIES DIMENSION NOMINAL`|设定对象指定尺寸控制的名义值|
+|`TREEVIEW OBJECT PROPERTIES DIMENSION NOMINAL GET`|获取对象指定尺寸控制的名义值|
+|`TREEVIEW OBJECT PROPERTIES DIMENSION MEASURED`|设定对象指定尺寸控制的测量值|
+|`TREEVIEW OBJECT PROPERTIES DIMENSION MEASURED GET`|获取对象指定尺寸控制的测量值|
 
 <br/>
