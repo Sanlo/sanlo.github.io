@@ -179,7 +179,7 @@ MSCL中提供了完善的操作数组的指令 ：
 |`MACRO ARRAY ELEMENTS INSERT AT_INDEX`|将包含元素的给定数组插入到数组的给定索引处|
 |`MACRO ARRAY ELEMENTS REMOVE AT_INDEXES`|从数组的指定索引处删除元素|
 |`MACRO ARRAY ELEMENTS SORT DOUBLE`|使用指定的排序排列双精度数组|
-|`MACRO ARRAY ELEMENTS SORT INTEGER`|使用指定的排序排列整形数组|
+|`MACRO ARRAY ELEMENTS SORT INTEGER`|使用指定的排序排列整型数组|
 |`MACRO ARRAY ELEMENTS SORT STRING`|使用指定的排序排列字符串数组|
 
 ### **用户输入**
