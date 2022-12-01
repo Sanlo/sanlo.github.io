@@ -10,6 +10,17 @@ excerpt: Polyworks作为通用测量软件平台，提供了内置的宏脚本�
 
 &emsp;&emsp;Polyworks作为通用测量软件平台，提供了内置的宏脚本编程语言，可以使用基于COM组件的技术调用软件底层指令与功能，实现测量计划自动化编制，和全流程的自动化测量，提供软件的使用效率。
 
+**宏脚本使用场景汇总**
+
+|场景|使用性|备注|
+|-|-|
+|工具栏|&emsp;✅&emsp;|包括Workspace Manager，Inspector和Modeler等|
+|序列编辑器|&emsp;✅&emsp;|位于Inspector中|
+|宏脚本编辑器|&emsp;✅&emsp;|主要用于编辑调试宏脚本|
+|对象测量|&emsp;✅&emsp;|位于Inspector中|
+|事件触发|&emsp;✅&emsp;|位于Inspector中|
+|响应特殊事件|&emsp;⛔&emsp;|主要由工作区的打开关闭，和扫描会话结束来触发，需要使用定义特定文件名|
+
 ## **一.语法基础**
 ### **变量**
 &emsp;&emsp;变量是用于存储和查询信息的容器，在Polyworks中存在三种基本变量类型，包括整型，双精度型和字符串型等
@@ -233,8 +244,47 @@ MSCL中提供了完善的操作数组的指令 ：
 
 &emsp;&emsp;要使用这些命令，首先使用`MACRO INPUT DIALOG_BOX DEFINE`命令定义对话框并为其分配一个标题。然后，使用相应的`MACRO INPUT DIALOG_BOX`命令将所需参数添加到对话框。请注意，它们的显示顺序与输入顺序相同。
 
-## **二.目录树对象操作**
-### **对象的选择**
+### **文件操作**
+&emsp;&emsp;常见的文件类型可以分为文本型文件和二进制型文件，二进制型文件无法使用记事本等文本编辑器直接编辑，需要使用专用的文件解析器解析其中的二进制对象，而文本型文件可以使用MSCL对其进行文件的创建，读取与信息写入等操作，也可以获得文件的行数和字段数等信息。
+#### **文件创建**
+&emsp;&emsp;文本型文件在使用MSCL进行创建时可以指定文件编码类型，包含`Unicode`和`Ascii`两种类型，默认为`Ascii`，也可以指定文件覆盖模式，包括覆写原有文件和追加原有文件两种方式，文件创建指令如下：
+``` as
+DATA_FILE CREATE ( <File name>, <Unicode or ASCII file>, <Overwrite the file> )
+```
+
+#### **文件写入**
+文件写入方法包括追究字符串和追加单行以及追加多行，具体包含如下指令：
+
+|宏指令|描述|
+|---|---|
+|`DATA_FILE APPEND`|追加字符串至文件|
+|`DATA_FILE APPEND LINE`|追加字符串数组至文件，数组元素使用空格键分割，形成一行文本|
+|`DATA_FILE APPEND LINES`|追加字符串数组至文件，每个数组元素占据一行|
+
+#### **文件内容读取**
+&emsp;&emsp;文本型文件的读取包含多种形式，可以对一行，一行中的某个字段或者所有字段，以及每一列的信息进行读取。**实际编程中，为了提高脚本执行效率，运行一条指令，应该读取尽可能多的信息**。具体包含如下指令：
+
+|宏指令|描述|
+|---|---|
+|`DATA_FILE READ LINE`|从文件中获得指定一行的信息|
+|`DATA_FILE READ COLUMNS`|获得每一列元素的字符串数组，可以跳过不需要的列，**推荐使用**|
+|`DATA_FILE READ LINE_FIELD`|获得文件指定行中指定列的字段信息|
+|`DATA_FILE READ LINE_FIELDS`|获得文件指定行中所有列的信息，返回一个字段数组|
+
+#### **文件属性读取**
+&emsp;&emsp;文本型文件的行数和每一行的字段数可以通过如下指令获得：
+
+|宏指令|描述|
+|---|---|
+|`DATA_FILE PROPERTIES NB_LINES GET`|获得文件的行数|
+|`DATA_FILE PROPERTIES NB_FIELDS_IN_LINE GET`|基于分隔符获得文件指定行的字段数（列数），|
+
+<br/>
+> 在MSCL中，提供了用于监听文件读写状态的的指令`DATA_FILE WAIT_UNTIL_MODIFIED`，该指令会暂停脚本的执行，直到指定的文件被修改，或者等待超时。如果文件不存在，脚本将会等待文件创建完成后，再执行后续指令。
+
+## **二.对象操作（Inspector）**
+&emsp;&emsp;在MSCL中的对象操作主要包括对象选择，对象类型判断，对象属性查询与设置，对象尺寸控制查询与设置等。主要的操作指令可以分为两类，即基于`OBJECT`的对象操作，和基于具体对象类型的对象操作，前者指令格式为`TREEVIEW OBJECT <OPERATION COMMAND>`，后者格式为`TREEVIEW <OBJECT NAME> <OPERATION COMMAND>`，为了提高脚本的通用性，首选基于`OBJECT`版的对象操作指令。
+### **选择对象**
 
 |宏指令|描述|
 |---|---|
@@ -253,5 +303,32 @@ MSCL中提供了完善的操作数组的指令 ：
 |`TREEVIEW OBJECT PROPERTIES DIMENSION NOMINAL GET`|获取对象指定尺寸控制的名义值|
 |`TREEVIEW OBJECT PROPERTIES DIMENSION MEASURED`|设定对象指定尺寸控制的测量值|
 |`TREEVIEW OBJECT PROPERTIES DIMENSION MEASURED GET`|获取对象指定尺寸控制的测量值|
+
+
+## **三.脚本与进程调用**
+通常情况下，编写宏脚本时，会将不同的功能放在不同的脚本文件中，脚本之间通过互相调用来实现更加复杂的功能，同时也可以调用Polyworks外部的进程完成一些当前MSCL指令无法实现的数据计算或者通信等。涉及到的宏指令如下：
+
+|宏指令|描述|
+|---|---|
+|`MACRO EXEC`|执行指定的宏脚本|
+|`MACRO OUTPUT_ARGUMENT`|设置传递到输出自变量中的值 |
+|`MACRO EXEC REMOTE_COMMAND`|执行远程指令，当在工作区中使用时，需要指定具体的模块ID，在模块中执行的仅仅是工作区中的远程指令|
+|`MACRO EXEC REMOTE_SCRIPT`|执行远程脚本，当在工作区中使用时，需要指定具体的模块ID，在模块中执行的仅仅是工作区中的远程脚本|
+|`SYSTEM COMMAND EXEC ASYNC`|异步执行指定的系统命令，并返回一个唯一的调用ID|
+|`SYSTEM COMMAND EXEC ASYNC CANCEL `|取消指定调用ID对应的系统命令|
+|`SYSTEM COMMAND EXEC ASYNC WAIT`|指定异步执行系统命令的超时事件，0为为无限长时间|
+|`SYSTEM COMMAND EXEC SYNC`|同步执行系统命令，只有当前命令运行结束后，才会执行后续脚本|
+|`SYSTEM COMMAND EXEC OUTPUT GET`|获得指定系统命令调用的输出|
+
+## **四.杂项**
+
+### **脚本执行效率的提升**
+通常情况下，每一条指令运行结束后，都会伴随着这个软件界面的刷新，包括目录树，3D场景，状态栏和信息栏等。因此，为了提高执行效率可以暂时的关闭这些软件区域的刷新，如下所示，使用`Toggle`参数，可以控制相关区域刷新的开关：
+
+```as
+TREEVIEW REFRESH ( "Toggle" )
+WINDOW REFRESH ( "Toggle","On","On")
+```
+
 
 <br/>
